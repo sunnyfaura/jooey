@@ -1,0 +1,11 @@
+Airline CRUD Management
+-list all airlines
+-all flights of an airline
+Ticket Counter
+-list of all ticket counters
+-list of all flights in all airlines
+-more than or equal to N number of available seats
+-more than or equal to N number of available economy/firstclass seats
+-all flights of an airline
+-flights like name
+-
