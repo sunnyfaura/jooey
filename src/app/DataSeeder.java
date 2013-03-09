@@ -52,7 +52,7 @@ public class DataSeeder
 			//firstclass_price economy_price
 			
 			String line = sc.nextLine();
-			int numTicketCounter = Integer.parseInt(line);
+			//int numTicketCounter = Integer.parseInt(line);
 			
 			while( sc.hasNextLine() ){
 				line = sc.nextLine();

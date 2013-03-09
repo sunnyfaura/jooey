@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Auction 
+public class Auction
 {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
