@@ -65,7 +65,8 @@ public class CRUDManagement extends JPanel {
 		setOpaque(true);
 		
 		String[] columnNames = {"Airline Name"};
-
+		
+		//populate the table with airline data
 		Object[][] data = {
 				{ "Bluh Airlines"},
 				{ "Bleh Airlines"}
@@ -77,6 +78,7 @@ public class CRUDManagement extends JPanel {
 	                return false;               
 	        };
 	    };
+	    
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);  
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(26, 64, 397, 292);

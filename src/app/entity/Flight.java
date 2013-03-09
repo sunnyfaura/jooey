@@ -18,9 +18,13 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Entity
 public class Flight
 {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="name")
+	@Column(name="pk")
+    private Long id;
+	
+	@Column
     private String name;
 	
 	@Column
@@ -45,7 +49,16 @@ public class Flight
     private Double firstClassFare;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
+	//@ManyToOne()
 	private Airline parentAirline;
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	public String getName()
     {

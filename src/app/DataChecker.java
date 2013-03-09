@@ -14,15 +14,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import app.entity.Auction;
-import app.repositories.AuctionRepository;
+import app.repositories.AirlineRepository;
 
 @Profile("dataChecker")
 @Component
 public class DataChecker
 {
 	@Autowired
-	private AuctionRepository auctionRepository;
+	private AirlineRepository airlineRepository;
 	
 	@PostConstruct
 	public void run() 

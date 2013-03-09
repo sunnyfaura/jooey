@@ -9,13 +9,24 @@ public class Airline
 {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="name")
+	@Column(name="pk")
+    private Long id;
+	
+	@Column
     private String name;
 	
-	@OneToMany(mappedBy="parentAirline", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	//@OneToMany(mappedBy="parentAuction", cascade=CascadeType.PERSIST)
+	//@OneToMany(mappedBy="parentAirline", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="parentAirline", cascade=CascadeType.PERSIST)
     private List<Flight> flights;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public String getName() {
 		return name;
 	}

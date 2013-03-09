@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.annotation.PostConstruct;
@@ -16,48 +17,73 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import app.entity.Auction;
-import app.entity.AuctionItem;
-import app.repositories.AuctionRepository;
-import app.repositories.BidRepository;
+import app.entity.Airline;
+import app.entity.Flight;
+import app.repositories.AirlineRepository;
+import app.repositories.FlightRepository;
 
 @Profile("dataSeeder")
 @Component
 public class DataSeeder
 {
 	@Autowired
-	private BidRepository bidDao;
+	private FlightRepository flightDao;
 
 	@Autowired
-	private AuctionRepository auctionDao;
+	private AirlineRepository airlineDao;
 
 	@PostConstruct
 	public void run() 
 	{ 
 		try
 		{
-			//seed the initial data
-			//may update data in the database
-			
 			Scanner sc = new Scanner(new FileReader("Flights.txt"));
 			
-			//# of ticket counters
+			//# of airlines
 			
 			//airline_name
 			//no_flights
 			//flight_name
 			//date_of_flight
-			//available_fc_seats occupied_fc_seats
-			//available_economy_seats occupied_economy_seats
-			//firstclass_price economy_price
+			//available_fc_seats
+			//available_economy_seats
+			//occupied_fc_seats
+			//occupied_economy_seats
+			//firstclass_price
+			//economy_price
+			
 			
 			String line = sc.nextLine();
-			//int numTicketCounter = Integer.parseInt(line);
+			//num of airlines
+			int numAirline = Integer.parseInt(line);
 			
-			while( sc.hasNextLine() ){
-				line = sc.nextLine();
-				//System.out.println(line);
+			for(int i = 0; i < numAirline; ++i){
+				Airline tempAirline = new Airline();
+				List<Flight> flightList = new ArrayList<Flight>();
 				
+				line = sc.nextLine();
+				tempAirline.setName(line);
+				line = sc.nextLine();
+				int numFlights = Integer.parseInt(line);
+				for(int j = 0; j < numFlights; ++j){
+					Flight tempFlight = new Flight();
+					tempFlight.setName(sc.nextLine());
+					tempFlight.setDate(sc.nextLine());
+					tempFlight.setAvailableFirstClass(Long.parseLong(sc.nextLine()));
+					tempFlight.setAvailableEconomy(Long.parseLong(sc.nextLine()));
+					tempFlight.setOccupiedFirstClass(Long.parseLong(sc.nextLine()));
+					tempFlight.setOccupiedEconomy(Long.parseLong(sc.nextLine()));
+					tempFlight.setFirstClassFare(Double.parseDouble(sc.nextLine()));
+					tempFlight.setEconomyFare(Double.parseDouble(sc.nextLine()));
+
+					flightList.add(tempFlight);
+				}
+				
+				tempAirline.setFlights(flightList);
+				airlineDao.save(tempAirline);
+				for(Flight f : flightList){
+					flightDao.save(f);
+				}
 			}
 			
 			javax.swing.SwingUtilities.invokeLater(new Runnable() {
