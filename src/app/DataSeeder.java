@@ -3,9 +3,11 @@ package app;
 import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.annotation.PostConstruct;
 import javax.swing.JFrame;
@@ -32,38 +34,41 @@ public class DataSeeder
 	@PostConstruct
 	public void run() 
 	{ 
-		// this runs
 		try
 		{
-//			Auction auction = new Auction();
-//			auction.setDescription("Auction 1");
-//			
-//			ArrayList<AuctionItem> listOfItems = new ArrayList<AuctionItem>();
-//			AuctionItem item1 = new AuctionItem();
-//			item1.setDescription("Item 1");
-//			item1.setType("Painting");
-//			item1.setParentAuction(auction);
-//			
-//			AuctionItem item2 = new AuctionItem();
-//			item2.setDescription("Item 2");
-//			item2.setType("Painting");
-//			item2.setParentAuction(auction);
-//			
-//			listOfItems.add(item1);
-//			listOfItems.add(item2);
-//
-//			auction.setItemsForAuction(listOfItems);
-//			
-//			auctionDao.save(auction);
+			//seed the initial data
+			//may update data in the database
+			
+			Scanner sc = new Scanner(new FileReader("Flights.txt"));
+			
+			//# of ticket counters
+			
+			//airline_name
+			//no_flights
+			//flight_name
+			//date_of_flight
+			//available_fc_seats occupied_fc_seats
+			//available_economy_seats occupied_economy_seats
+			//firstclass_price economy_price
+			
+			String line = sc.nextLine();
+			int numTicketCounter = Integer.parseInt(line);
+			
+			while( sc.hasNextLine() ){
+				line = sc.nextLine();
+				//System.out.println(line);
+				
+			}
 			
 			javax.swing.SwingUtilities.invokeLater(new Runnable() {
 	            public void run() {
 	            	JFrame frame = new JFrame();	     
 	            	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	            	MainInCardLayout main = new MainInCardLayout();
-	            	main.createCards(frame.getContentPane());
+	            	//MainInCardLayout main = new MainInCardLayout();
+	            	//main.createCards(frame.getContentPane());
 	            	frame.setPreferredSize(new Dimension(600, 450));
 	            	frame.setTitle("Airline Ticket Purchasing System");
+	            	frame.setContentPane(new CRUDManagement());
 	            	frame.pack();
 	                frame.setVisible(true);
 	            }
