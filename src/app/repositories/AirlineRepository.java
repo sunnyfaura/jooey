@@ -11,5 +11,4 @@ import app.entity.Flight;
 @Repository
 public interface AirlineRepository extends JpaRepository<Airline, Long>
 {
-	//List<Bidder> findBy
 }

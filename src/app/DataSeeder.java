@@ -78,7 +78,6 @@ public class DataSeeder
 
 					flightList.add(tempFlight);
 				}
-				
 				tempAirline.setFlights(flightList);
 				airlineDao.save(tempAirline);
 				for(Flight f : flightList){
