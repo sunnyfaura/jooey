@@ -7,9 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import app.entity.Airline;
 import app.entity.Flight;
+import app.entity.TCounter;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Long>
 {
-	//List<Bidder> findBy
+	List<Flight> findByParentAirlineLike(String pAirline);
+	List<Flight> findByAvailableEconomyGreaterThan(int seats);
+	List<Flight> findByAvailableFirstClassGreaterThan(int seats);
+	List<Flight> findByNameLike(String name);
 }

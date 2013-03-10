@@ -19,8 +19,10 @@ import org.springframework.stereotype.Component;
 
 import app.entity.Airline;
 import app.entity.Flight;
+import app.entity.TCounter;
 import app.repositories.AirlineRepository;
 import app.repositories.FlightRepository;
+import app.repositories.TCounterRepository;
 
 @Profile("dataSeeder")
 @Component
@@ -31,7 +33,10 @@ public class DataSeeder
 
 	@Autowired
 	private AirlineRepository airlineDao;
-
+	
+	@Autowired
+	private TCounterRepository tCounterDao;
+	
 	@PostConstruct
 	public void run() 
 	{ 
@@ -104,5 +109,33 @@ public class DataSeeder
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public List<Airline> findAllAirlines()
+	{
+		return airlineDao.findAll();
+	}
+	
+	public List<Flight> findAllFlight()
+	{
+		return flightDao.findAll();
+	}
+	
+	public List<Flight> findAvailableEconomy(int seats)
+	{
+		return flightDao.findByAvailableEconomyGreaterThan(seats);
+	}
+	
+	public List<Flight> findAvailableFirstClass(int seats)
+	{
+		return flightDao.findByAvailableFirstClassGreaterThan(seats);
+	}
+	
+	public List<Flight> findFlightByName(String name)
+	{
+		String temp = "%";
+		temp+=name;
+		temp+="%";
+		return flightDao.findByNameLike(temp);
 	}
 }

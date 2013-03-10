@@ -10,7 +10,7 @@ import app.entity.Flight;
 import app.entity.TCounter;
 
 @Repository
-public interface AirlineRepository extends JpaRepository<Airline, Long>
+public interface TCounterRepository extends JpaRepository<Airline, Long>
 {
 	//List<Bidder> findBy
 }
