@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 import javax.annotation.PostConstruct;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -37,27 +38,14 @@ public class DataSeeder
 	@Autowired
 	private TCounterRepository tCounterDao;
 	
+	private MainGUI main;
+	
 	@PostConstruct
 	public void run() 
 	{ 
 		try
 		{
 			Scanner sc = new Scanner(new FileReader("Flights.txt"));
-			
-			//# of airlines
-			
-			//airline_name
-			//no_flights
-			//flight_name
-			//date_of_flight
-			//available_fc_seats
-			//available_economy_seats
-			//occupied_fc_seats
-			//occupied_economy_seats
-			//firstclass_price
-			//economy_price
-			
-			
 			String line = sc.nextLine();
 			//num of airlines
 			int numAirline = Integer.parseInt(line);
@@ -91,19 +79,23 @@ public class DataSeeder
 				}
 			}
 			
+			main = new MainGUI();
+			
 			javax.swing.SwingUtilities.invokeLater(new Runnable() {
 	            public void run() {
-	            	JFrame frame = new JFrame();	     
+	            	JFrame frame = new JFrame();
 	            	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	            	//MainInCardLayout main = new MainInCardLayout();
-	            	//main.createCards(frame.getContentPane());
-	            	frame.setPreferredSize(new Dimension(600, 450));
 	            	frame.setTitle("Airline Ticket Purchasing System");
-	            	frame.setContentPane(new CRUDManagement());
+	            	frame.setPreferredSize(new Dimension(1200,700));
+	            	frame.setContentPane(main);
 	            	frame.pack();
 	                frame.setVisible(true);
 	            }
         	});
+			
+			System.out.println(findAllAirlines().size());
+			main.allAirlinesData(findAllAirlines());
+			main.allFlightsData(findAllFlight());
 		}
 		catch(Exception e)
 		{
