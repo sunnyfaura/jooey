@@ -1,5 +1,7 @@
 package app;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,15 +23,12 @@ import javax.swing.JButton;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class AllAirlines extends JPanel {
-	
-	@Autowired
-	private AirlineRepository airlineDao;
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+	public JButton btnAddNewAirline, btnAddNewFlights, btnEditAirline, btnDeleteAirline, btnShowAllFlights;
 	private AirlineTableModel dm;
 	/**
 	 * Create the panel.
@@ -48,23 +47,23 @@ public class AllAirlines extends JPanel {
         scrollPane.setBounds(0, 0, 200, 471 );
         add(scrollPane);
         
-        JButton btnAddNewAirline = new JButton("Add New Airline");
+        btnAddNewAirline = new JButton("Add New Airline");
         btnAddNewAirline.setBounds(22, 524, 155, 23);
         add(btnAddNewAirline);
         
-        JButton btnAddNewFlights = new JButton("Add New Flights");
+        btnAddNewFlights = new JButton("Add New Flights");
         btnAddNewFlights.setBounds(22, 546, 155, 23);
         add(btnAddNewFlights);
         
-        JButton btnEditAirline = new JButton("Edit Airline");
+        btnEditAirline = new JButton("Edit Airline");
         btnEditAirline.setBounds(22, 569, 155, 23);
         add(btnEditAirline);
         
-        JButton btnDeleteAirline = new JButton("Delete Airline");
+        btnDeleteAirline = new JButton("Delete Airline");
         btnDeleteAirline.setBounds(22, 591, 155, 23);
         add(btnDeleteAirline);
         
-        JButton btnShowAllFlights = new JButton("Show All Flights");
+        btnShowAllFlights = new JButton("Show All Flights");
         btnShowAllFlights.setBounds(22, 490, 155, 23);
         add(btnShowAllFlights);
 	}

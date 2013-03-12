@@ -29,7 +29,7 @@ public class MainGUI extends JPanel {
 	double totalSales = 0.0;
 	
 	private JLabel lblWelcomeYourLast;
-	private JButton btnPurchaseSeats, btnSupplySearchCriteria;
+	public JButton btnPurchaseSeats, btnSupplySearchCriteria;
 	
 	private JLabel lblLatestPurchaseMade;
 	private JLabel lblTotalSales;
@@ -54,9 +54,6 @@ public class MainGUI extends JPanel {
 		ticketCountersPane.setBounds(200, 0, 600, 700);
 		add(ticketCountersPane);
 		
-		ButtonListener purchaseSeatsListener = new ButtonListener();
-		ButtonListener supplyCriteriaListener = new ButtonListener();
-		
 		lblWelcomeYourLast = new JLabel("A ticket counter has been created!");
 		add(lblWelcomeYourLast);
 		lblWelcomeYourLast.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -64,12 +61,10 @@ public class MainGUI extends JPanel {
 		
 		btnSupplySearchCriteria = new JButton("Supply Search Criteria..");
 		btnSupplySearchCriteria.setBounds(810, 53, 206, 23);
-		btnSupplySearchCriteria.addActionListener(supplyCriteriaListener);
 		add(btnSupplySearchCriteria);
 		
 		btnPurchaseSeats = new JButton("Purchase Seats!");
 		btnPurchaseSeats.setBounds(810, 89, 206, 23);
-		btnPurchaseSeats.addActionListener(purchaseSeatsListener);
 		add(btnPurchaseSeats);
 		
 		lblLatestPurchaseMade = new JLabel("Latest sales increase: P" + salesIncrease );
@@ -102,14 +97,5 @@ public class MainGUI extends JPanel {
 		ticketCountersPane.updateDataPerAirline(m);
 	}
 	
-	class ButtonListener implements ActionListener {
-		public void actionPerformed(ActionEvent e){
-			if(e.getSource() == btnPurchaseSeats){
-				purchaseSeatsDialog.openDialog();
-			}
-			if(e.getSource() == btnSupplySearchCriteria) {
-				searchCriterieDialog.openDialog();
-			}
-		}
-    }
+	
 }
