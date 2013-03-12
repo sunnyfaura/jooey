@@ -16,4 +16,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long>
 	List<Flight> findByAvailableEconomyGreaterThan(int seats);
 	List<Flight> findByAvailableFirstClassGreaterThan(int seats);
 	List<Flight> findByNameLike(String name);
+	
+	//@Query("select SUM(available_economy + available_first_class) from flight where")
+	//List<Flight> findByTotalSeatsGreaterThan();
 }
