@@ -12,5 +12,5 @@ import app.entity.TCounter;
 @Repository
 public interface AirlineRepository extends JpaRepository<Airline, Long>
 {
-	//List<Bidder> findBy
+	Airline findByNameLike(String name);
 }

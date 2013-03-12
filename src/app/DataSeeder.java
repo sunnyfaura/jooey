@@ -130,4 +130,12 @@ public class DataSeeder
 		temp+="%";
 		return flightDao.findByNameLike(temp);
 	}
+	
+	public Airline findByName(String name)
+	{
+		String temp = "%";
+		temp+=name;
+		temp+="%";
+		return airlineDao.findByNameLike(temp);
+	}
 }
