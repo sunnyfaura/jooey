@@ -13,50 +13,72 @@ import app.entity.Flight;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainGUI extends JPanel {
 	
-	AllAirlines airlinesPane = new AllAirlines();
-	TicketCounters ticketCountersPane = new TicketCounters();
+	public static AllAirlines airlinesPane;
+	public static TicketCounters ticketCountersPane;
+	public static PurchaseSeats purchaseSeatsDialog;
+	public static SearchCriteria searchCriterieDialog;
+	
 	double salesIncrease = 0.0;
 	double totalSales = 0.0;
 	
-	private final JLabel lblWelcomeYourLast = new JLabel("A ticket counter has been created!");
-	private final JButton btnPurchaseSeats = new JButton("Purchase Seats!");
-	private final JLabel lblLatestPurchaseMade = new JLabel("Latest sales increase: P" + salesIncrease );
-	private final JLabel lblTotalSales = new JLabel("Total Sales: P" + totalSales);
-	private final JLabel lblNumberOfEconomy = new JLabel("Number of Economy Seats Sold: ");
-	private final JLabel lblNumberOfFirstclass = new JLabel("Number of First-Class Seats Sold:");
+	private JLabel lblWelcomeYourLast;
+	private JButton btnPurchaseSeats, btnSupplySearchCriteria;
+	
+	private JLabel lblLatestPurchaseMade;
+	private JLabel lblTotalSales;
+	private JLabel lblNumberOfEconomy;
+	private JLabel lblNumberOfFirstclass;
 	
 	public MainGUI() {
+		airlinesPane = new AllAirlines();
+		ticketCountersPane = new TicketCounters();
+		purchaseSeatsDialog = new PurchaseSeats();
+		searchCriterieDialog = new SearchCriteria();
+
 		setBounds(100, 100, 1200, 700);
 		setLayout(null);
-		airlinesPane.setBounds(0, 0, 200, 600);
+		airlinesPane.setBounds(0, 0, 200, 700);
 		add(airlinesPane);
 		ticketCountersPane.setBounds(200, 0, 600, 700);
 		add(ticketCountersPane);
 		
-		JButton btnSupplySearchCriteria = new JButton("Supply Search Criteria..");
-		btnSupplySearchCriteria.setBounds(810, 53, 206, 23);
-		add(btnSupplySearchCriteria);
+		ButtonListener purchaseSeatsListener = new ButtonListener();
+		ButtonListener supplyCriteriaListener = new ButtonListener();
+		
+		lblWelcomeYourLast = new JLabel("A ticket counter has been created!");
+		add(lblWelcomeYourLast);
 		lblWelcomeYourLast.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblWelcomeYourLast.setBounds(810, 11, 380, 31);
 		
-		add(lblWelcomeYourLast);
+		btnSupplySearchCriteria = new JButton("Supply Search Criteria..");
+		btnSupplySearchCriteria.setBounds(810, 53, 206, 23);
+		btnSupplySearchCriteria.addActionListener(supplyCriteriaListener);
+		add(btnSupplySearchCriteria);
+		
+		btnPurchaseSeats = new JButton("Purchase Seats!");
 		btnPurchaseSeats.setBounds(810, 89, 206, 23);
-		
+		btnPurchaseSeats.addActionListener(purchaseSeatsListener);
 		add(btnPurchaseSeats);
+		
+		lblLatestPurchaseMade = new JLabel("Latest sales increase: P" + salesIncrease );
 		lblLatestPurchaseMade.setBounds(810, 145, 380, 23);
-		
 		add(lblLatestPurchaseMade);
+		
+		lblTotalSales = new JLabel("Total Sales: P" + totalSales);
 		lblTotalSales.setBounds(810, 331, 362, 23);
-		
 		add(lblTotalSales);
+		
+		lblNumberOfEconomy = new JLabel("Number of Economy Seats Sold: ");
 		lblNumberOfEconomy.setBounds(810, 263, 185, 14);
-		
 		add(lblNumberOfEconomy);
-		lblNumberOfFirstclass.setBounds(810, 288, 225, 14);
 		
+		lblNumberOfFirstclass = new JLabel("Number of First-Class Seats Sold:");
+		lblNumberOfFirstclass.setBounds(810, 288, 225, 14);
 		add(lblNumberOfFirstclass);
 	}
 	
@@ -66,5 +88,17 @@ public class MainGUI extends JPanel {
 	
 	public void allFlightsData( List<Flight> m ) {
 		ticketCountersPane.updateData(m);
+		//searchCriterieDialog
 	}
+	
+	class ButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent e){
+			if(e.getSource() == btnPurchaseSeats){
+				purchaseSeatsDialog.openDialog();
+			}
+			if(e.getSource() == btnSupplySearchCriteria) {
+				searchCriterieDialog.openDialog();
+			}
+		}
+    }
 }

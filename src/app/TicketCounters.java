@@ -19,7 +19,7 @@ public class TicketCounters extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable table;
-	private FlightTableModel dm;
+	private static FlightTableModel dm;
 	/**
 	 * Create the panel.
 	 */
@@ -38,7 +38,7 @@ public class TicketCounters extends JPanel {
         add(scrollPane);
 	}
 	
-	public void updateData(List<Flight> m){
+	public static void updateData(List<Flight> m){
 		for(Flight a : m){
 			dm.addElement(a);
 		}

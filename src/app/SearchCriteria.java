@@ -13,16 +13,21 @@ import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JFormattedTextField;
+
+import app.entity.Flight;
+
 import java.awt.Font;
+import java.util.List;
 
 public class SearchCriteria extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
+	//private String[] flightNames;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void openDialog() {
 		try {
 			SearchCriteria dialog = new SearchCriteria();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -43,6 +48,7 @@ public class SearchCriteria extends JDialog {
 		getContentPane().add(contentPanel);
 		contentPanel.setLayout(null);
 		
+		//JComboBox comboBox = new JComboBox(flightNames);
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(10, 11, 28, 20);
 		contentPanel.add(comboBox);
@@ -66,14 +72,14 @@ public class SearchCriteria extends JDialog {
 		
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setToolTipText("");
-		comboBox_1.setBounds(73, 37, 351, 20);
+		comboBox_1.setBounds(134, 37, 290, 20);
 		getContentPane().add(comboBox_1);
 		
 		JLabel lblFlightName = new JLabel("Flight Name");
 		lblFlightName.setBounds(10, 40, 97, 14);
 		getContentPane().add(lblFlightName);
 		
-		JLabel lblLeastNumberOf = new JLabel("Least number of seats:");
+		JLabel lblLeastNumberOf = new JLabel("Number of seats:");
 		lblLeastNumberOf.setBounds(10, 68, 151, 27);
 		getContentPane().add(lblLeastNumberOf);
 		
@@ -104,7 +110,11 @@ public class SearchCriteria extends JDialog {
 		getContentPane().add(lblDate);
 		
 		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(91, 114, 333, 20);
+		comboBox_2.setBounds(134, 114, 290, 20);
 		getContentPane().add(comboBox_2);
+	}
+	
+	public void setFlightNamesComboBox(List<Flight> m){
+		
 	}
 }

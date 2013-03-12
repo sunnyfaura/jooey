@@ -7,9 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
 import app.entity.Airline;
+import app.entity.Flight;
+
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
 
@@ -24,34 +28,41 @@ public class AllAirlines extends JPanel {
 	 * Create the panel.
 	 */
 	public AllAirlines() {
-		setBounds(100, 100, 200, 600);		 
+		setBounds(100, 100, 200, 700);		 
 		setLayout(null);
 		
 		setOpaque(true);
 		dm = new AirlineTableModel();
 		
 		table = new JTable(dm);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);  
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.getSelectionModel().addListSelectionListener(new RowListener());
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBounds(0, 0, 200, 471 );
         add(scrollPane);
         
         JButton btnAddNewAirline = new JButton("Add New Airline");
-        btnAddNewAirline.setBounds(22, 482, 155, 23);
+        btnAddNewAirline.setBounds(22, 524, 155, 23);
         add(btnAddNewAirline);
         
         JButton btnAddNewFlights = new JButton("Add New Flights");
-        btnAddNewFlights.setBounds(22, 507, 155, 23);
+        btnAddNewFlights.setBounds(22, 546, 155, 23);
         add(btnAddNewFlights);
         
         JButton btnEditAirline = new JButton("Edit Airline");
-        btnEditAirline.setBounds(22, 532, 155, 23);
+        btnEditAirline.setBounds(22, 569, 155, 23);
         add(btnEditAirline);
         
         JButton btnDeleteAirline = new JButton("Delete Airline");
-        btnDeleteAirline.setBounds(22, 566, 155, 23);
+        btnDeleteAirline.setBounds(22, 591, 155, 23);
         add(btnDeleteAirline);
+        
+        JButton btnShowAllFlights = new JButton("Show All Flights");
+        btnShowAllFlights.setBounds(22, 490, 155, 23);
+        add(btnShowAllFlights);
+        
+        
 	}
 	
 	public void updateData(List<Airline> m){
@@ -59,6 +70,24 @@ public class AllAirlines extends JPanel {
 			dm.addElement(a);
 		}
 	}
+	
+	public void updateFlightList(){
+		int row = table.getSelectedRow();
+		Airline a = (Airline)table.getValueAt(row,0);
+		TicketCounters.updateData(a.getFlights());
+	}
+	
+	private class RowListener implements ListSelectionListener {
+	    public void valueChanged(ListSelectionEvent event) {
+	        if (event.getValueIsAdjusting()) {
+	            return;
+	        }
+	        System.out.println("ROW SELECTION EVENT. ");
+	        updateFlightList();
+	    }
+	}
+	
+	
 }
 
 class AirlineTableModel extends AbstractTableModel {

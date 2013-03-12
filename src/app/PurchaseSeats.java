@@ -18,7 +18,7 @@ public class PurchaseSeats extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void openDialog() {
 		try {
 			PurchaseSeats dialog = new PurchaseSeats();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

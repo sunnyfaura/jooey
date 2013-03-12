@@ -35,7 +35,7 @@ public class Airline
 		this.name = name;
 	}
 
-	public List<Flight> getItemsForAuction() {
+	public List<Flight> getFlights() {
 		return flights;
 	}
 
