@@ -44,6 +44,11 @@ public class TicketCounters extends JPanel {
 		}
 	}
 	
+	public static void updateDataPerAirline(List<Flight> m){
+		for(Flight a : m){
+			dm.addElement(a);
+		}
+	}
 }
 
 class FlightTableModel extends AbstractTableModel {

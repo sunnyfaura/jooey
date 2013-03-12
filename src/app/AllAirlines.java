@@ -13,11 +13,18 @@ import javax.swing.table.AbstractTableModel;
 
 import app.entity.Airline;
 import app.entity.Flight;
+import app.repositories.AirlineRepository;
 
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class AllAirlines extends JPanel {
+	
+	@Autowired
+	private AirlineRepository airlineDao;
+	
 	/**
 	 * 
 	 */
@@ -36,7 +43,6 @@ public class AllAirlines extends JPanel {
 		
 		table = new JTable(dm);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.getSelectionModel().addListSelectionListener(new RowListener());
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBounds(0, 0, 200, 471 );
@@ -61,8 +67,6 @@ public class AllAirlines extends JPanel {
         JButton btnShowAllFlights = new JButton("Show All Flights");
         btnShowAllFlights.setBounds(22, 490, 155, 23);
         add(btnShowAllFlights);
-        
-        
 	}
 	
 	public void updateData(List<Airline> m){
@@ -70,24 +74,16 @@ public class AllAirlines extends JPanel {
 			dm.addElement(a);
 		}
 	}
-	
-	public void updateFlightList(){
+
+	public String getAirlineName(){
 		int row = table.getSelectedRow();
-		Airline a = (Airline)table.getValueAt(row,0);
-		TicketCounters.updateData(a.getFlights());
+		String name = (String) table.getValueAt(row,0);
+		return name;
 	}
 	
-	private class RowListener implements ListSelectionListener {
-	    public void valueChanged(ListSelectionEvent event) {
-	        if (event.getValueIsAdjusting()) {
-	            return;
-	        }
-	        System.out.println("ROW SELECTION EVENT. ");
-	        updateFlightList();
-	    }
+	public JTable getTable(){
+		return table;
 	}
-	
-	
 }
 
 class AirlineTableModel extends AbstractTableModel {
@@ -126,7 +122,6 @@ class AirlineTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch(columnIndex) {
             case 0: return list.get(rowIndex).getName();
-            case 1: return list.get(rowIndex).getName();
         }
         return null;
     }

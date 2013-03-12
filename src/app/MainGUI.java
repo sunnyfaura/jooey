@@ -7,6 +7,8 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import app.entity.Airline;
 import app.entity.Flight;
@@ -34,7 +36,12 @@ public class MainGUI extends JPanel {
 	private JLabel lblNumberOfEconomy;
 	private JLabel lblNumberOfFirstclass;
 	
+	public String airlineNameSelected;
+	public Boolean hasAirlineSelected;
+	
 	public MainGUI() {
+		hasAirlineSelected = false;
+		
 		airlinesPane = new AllAirlines();
 		ticketCountersPane = new TicketCounters();
 		purchaseSeatsDialog = new PurchaseSeats();
@@ -80,6 +87,8 @@ public class MainGUI extends JPanel {
 		lblNumberOfFirstclass = new JLabel("Number of First-Class Seats Sold:");
 		lblNumberOfFirstclass.setBounds(810, 288, 225, 14);
 		add(lblNumberOfFirstclass);
+		
+		airlinesPane.getTable().getSelectionModel().addListSelectionListener(new RowListener());
 	}
 	
 	public void allAirlinesData( List<Airline> m ) {
@@ -89,6 +98,25 @@ public class MainGUI extends JPanel {
 	public void allFlightsData( List<Flight> m ) {
 		ticketCountersPane.updateData(m);
 		//searchCriterieDialog
+	}
+	
+	public void flightsPerAirlineData( List<Flight> m ) {
+		ticketCountersPane.
+	}
+	
+	public String getAirlineNameSelected(){
+		return airlineNameSelected;
+	}
+	
+	private class RowListener implements ListSelectionListener {
+	    public void valueChanged(ListSelectionEvent event) {
+	        if (event.getValueIsAdjusting()) {
+	            return;
+	        }
+	        System.out.println("ROW SELECTION EVENT");
+	        airlineNameSelected = airlinesPane.getAirlineName();
+	        hasAirlineSelected = true;
+	    }
 	}
 	
 	class ButtonListener implements ActionListener {

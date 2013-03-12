@@ -13,6 +13,8 @@ import java.util.Scanner;
 import javax.annotation.PostConstruct;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -96,6 +98,10 @@ public class DataSeeder
 			System.out.println(findAllAirlines().size());
 			main.allAirlinesData(findAllAirlines());
 			main.allFlightsData(findAllFlight());
+			if(main.hasAirlineSelected){
+				Airline a = findByName( main.airlineNameSelected );
+				main.flightsPerAirlineData( a.getFlights() );
+			}
 		}
 		catch(Exception e)
 		{
@@ -130,4 +136,11 @@ public class DataSeeder
 		temp+="%";
 		return flightDao.findByNameLike(temp);
 	}
+	
+	public Airline findByName(String name) {
+		String temp = "%";
+		temp+=name;
+		temp+="%";
+		return airlineDao.findByNameLike(temp);
+	}	
 }
