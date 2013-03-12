@@ -16,7 +16,7 @@ public class Airline
     private String name;
 	
 	//@OneToMany(mappedBy="parentAirline", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	@OneToMany(mappedBy="parentAirline", cascade=CascadeType.PERSIST)
+	@OneToMany(mappedBy="parentAirline", cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Flight> flights;
 
 	public Long getId() {

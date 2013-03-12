@@ -20,6 +20,7 @@ public class TicketCounters extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private static FlightTableModel dm;
+	private JScrollPane scrollPane;
 	/**
 	 * Create the panel.
 	 */
@@ -32,22 +33,25 @@ public class TicketCounters extends JPanel {
 		
 		table = new JTable(dm);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);  
-        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane = new JScrollPane(table);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBounds(0, 0, 585, 700);
         add(scrollPane);
 	}
 	
-	public static void updateData(List<Flight> m){
+	public void updateData(List<Flight> m){
 		for(Flight a : m){
 			dm.addElement(a);
+			System.out.println(a.getName() + " " + a.getDate());
 		}
 	}
 	
-	public static void updateDataPerAirline(List<Flight> m){
+	public void updateDataPerAirline(List<Flight> m){
+		FlightTableModel temp = new FlightTableModel();
 		for(Flight a : m){
-			dm.addElement(a);
+			temp.addElement(a);
 		}
+		table.setModel(temp);
 	}
 }
 

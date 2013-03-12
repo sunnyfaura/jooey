@@ -87,8 +87,6 @@ public class MainGUI extends JPanel {
 		lblNumberOfFirstclass = new JLabel("Number of First-Class Seats Sold:");
 		lblNumberOfFirstclass.setBounds(810, 288, 225, 14);
 		add(lblNumberOfFirstclass);
-		
-		airlinesPane.getTable().getSelectionModel().addListSelectionListener(new RowListener());
 	}
 	
 	public void allAirlinesData( List<Airline> m ) {
@@ -101,22 +99,7 @@ public class MainGUI extends JPanel {
 	}
 	
 	public void flightsPerAirlineData( List<Flight> m ) {
-		ticketCountersPane.
-	}
-	
-	public String getAirlineNameSelected(){
-		return airlineNameSelected;
-	}
-	
-	private class RowListener implements ListSelectionListener {
-	    public void valueChanged(ListSelectionEvent event) {
-	        if (event.getValueIsAdjusting()) {
-	            return;
-	        }
-	        System.out.println("ROW SELECTION EVENT");
-	        airlineNameSelected = airlinesPane.getAirlineName();
-	        hasAirlineSelected = true;
-	    }
+		ticketCountersPane.updateDataPerAirline(m);
 	}
 	
 	class ButtonListener implements ActionListener {

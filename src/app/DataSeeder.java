@@ -70,6 +70,7 @@ public class DataSeeder
 					tempFlight.setOccupiedEconomy(Long.parseLong(sc.nextLine()));
 					tempFlight.setFirstClassFare(Double.parseDouble(sc.nextLine()));
 					tempFlight.setEconomyFare(Double.parseDouble(sc.nextLine()));
+					tempFlight.setParentAirline(tempAirline);
 
 					flightList.add(tempFlight);
 				}
@@ -80,7 +81,10 @@ public class DataSeeder
 					flightDao.save(f);
 				}
 			}
-			
+			Airline temp = airlineDao.findByNameLike("Bad Airline");
+			System.out.println(temp.getName() + " " + temp.getId());
+			List<Flight> yay = findAllFlightsForAirline(temp);
+			System.out.println(yay.size());
 			main = new MainGUI();
 			
 			javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -98,10 +102,11 @@ public class DataSeeder
 			System.out.println(findAllAirlines().size());
 			main.allAirlinesData(findAllAirlines());
 			main.allFlightsData(findAllFlight());
-			if(main.hasAirlineSelected){
-				Airline a = findByName( main.airlineNameSelected );
-				main.flightsPerAirlineData( a.getFlights() );
-			}
+//			if(main.hasAirlineSelected){
+//				Airline a = findByName( main.airlineNameSelected );
+//				main.flightsPerAirlineData( a.getFlights() );
+//			}
+			main.airlinesPane.getTable().getSelectionModel().addListSelectionListener(new RowListener());
 		}
 		catch(Exception e)
 		{
@@ -142,5 +147,34 @@ public class DataSeeder
 		temp+=name;
 		temp+="%";
 		return airlineDao.findByNameLike(temp);
-	}	
+	}
+	
+	public List <Flight> findAllFlightsForAirline(Airline a)
+	{
+		List<Flight> temp = new ArrayList<Flight>();
+		List<Flight> garbage = flightDao.findAll();
+		for(int i = 0; i < garbage.size(); i++)
+		{
+			Airline b = garbage.get(i).getParentAirline();
+			System.out.println(a + " " + b);
+			if(b.getId() == a.getId())
+			{
+				temp.add(garbage.get(i));
+			}
+		}
+		return temp;
+	}
+	
+	private class RowListener implements ListSelectionListener {
+	    public void valueChanged(ListSelectionEvent event) {
+	        if (event.getValueIsAdjusting()) {
+	            return;
+	        }
+	        System.out.println("ROW SELECTION EVENT");
+	        main.airlineNameSelected = main.airlinesPane.getAirlineName();
+	        //main.hasAirlineSelected = true;
+	        Airline a = findByName( main.airlineNameSelected );
+	        main.flightsPerAirlineData( findAllFlightsForAirline(a) );
+	    }
+	}
 }

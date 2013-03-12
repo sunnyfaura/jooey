@@ -78,6 +78,7 @@ public class AllAirlines extends JPanel {
 	public String getAirlineName(){
 		int row = table.getSelectedRow();
 		String name = (String) table.getValueAt(row,0);
+		System.out.println(name);
 		return name;
 	}
 	
