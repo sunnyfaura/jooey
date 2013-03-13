@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -49,6 +50,7 @@ public class DataSeeder
 	private TCounterRepository tCounterDao;
 	
 	private MainGUI main;
+	private Flight purchaseFlight;
 	
 	@PostConstruct
 	public void run() 
@@ -104,23 +106,25 @@ public class DataSeeder
 	            	frame.setContentPane(main);
 	            	frame.pack();
 	                frame.setVisible(true);
+	            	main.airlinesPane.getTable().getSelectionModel().addListSelectionListener(new AirlineRowListener());
+	    			main.airlinesPane.btnAddNewAirline.addActionListener(new ButtonListener());
+	    			main.airlinesPane.btnAddNewFlights.addActionListener(new ButtonListener());
+	    			main.airlinesPane.btnDeleteAirline.addActionListener(new ButtonListener());
+	    			main.airlinesPane.btnEditAirline.addActionListener(new ButtonListener());
+	    			main.airlinesPane.btnShowAllFlights.addActionListener(new ButtonListener());
+	    			main.btnLimitResults.addActionListener(new ButtonListener());
+	    			main.btnPurchase.addActionListener(new ButtonListener());
+//	    			main.searchFlightNameCB.addItemListener(new ItemChangeListener());
+//	    			main.searchFlighDateCB.addItemListener(new ItemChangeListener());
+	    			main.purchaseFlightNameCB.addItemListener(new ItemChangeListener());
 	            }
         	});
 			
 			System.out.println(findAllAirlines().size());
 			main.allAirlinesData(findAllAirlines());
-			main.allFlightsData(findAllFlight());
-			main.airlinesPane.getTable().getSelectionModel().addListSelectionListener(new AirlineRowListener());
-			main.airlinesPane.btnAddNewAirline.addActionListener(new ButtonListener());
-			main.airlinesPane.btnAddNewFlights.addActionListener(new ButtonListener());
-			main.airlinesPane.btnDeleteAirline.addActionListener(new ButtonListener());
-			main.airlinesPane.btnEditAirline.addActionListener(new ButtonListener());
-			main.airlinesPane.btnShowAllFlights.addActionListener(new ButtonListener());
-			main.btnSupplySearchCriteria.addActionListener(new ButtonListener());
-			main.btnPurchaseSeats.addActionListener(new ButtonListener());
+			main.allFlightsData(findAllFlight());			
 		}
-		catch(Exception e)
-		{
+		catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -160,13 +164,6 @@ public class DataSeeder
 		return airlineDao.findByNameLike(temp);
 	}
 	
-	public Flight findFlight(String name){
-		String temp = "%";
-		temp+=name;
-		temp+="%";
-		return flightDao.findByName(temp);
-	}
-	
 	public List <Flight> findAllFlightsForAirline(Airline a)
 	{
 		List<Flight> temp = new ArrayList<Flight>();
@@ -175,8 +172,7 @@ public class DataSeeder
 		{
 			Airline b = garbage.get(i).getParentAirline();
 			System.out.println(a + " " + b);
-			if(b.getId() == a.getId())
-			{
+			if(b.getId() == a.getId()) {
 				temp.add(garbage.get(i));
 			}
 		}
@@ -188,55 +184,59 @@ public class DataSeeder
 	        if (event.getValueIsAdjusting()) {
 	            return;
 	        }
-//	        System.out.println("ROW SELECTION EVENT");
-	        main.airlineNameSelected = main.airlinesPane.getAirlineName();
 	        //main.hasAirlineSelected = true;
-	        Airline a = findByName( main.airlineNameSelected );
+	        Airline a = findByName( main.airlinesPane.getAirlineName() );
 	        main.flightsPerAirlineData( findAllFlightsForAirline(a) );
 	    }
 	}
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e){
-			if(e.getSource() == main.btnPurchaseSeats){
-				List<String> name = new ArrayList<String>();
-				for( Flight newRow : findAllFlight() ) {
-				    name.add( newRow.getName() );
-				}
-				
-				main.purchaseSeatsDialog.openDialog(name.toArray());
-				main.purchaseSeatsDialog.getComboBox().addItemListener(new ItemChangeListener());
-			}
-			if(e.getSource() == main.btnSupplySearchCriteria) {
-				List<String> name = new ArrayList<String>();
-				for( Flight newRow : findAllFlight() ) {
-				    name.add( newRow.getName() );
-				}
-				
-				List<String> date = new ArrayList<String>();
-				for( Flight newRow : findAllFlight() ) {
-					date.add( newRow.getDate() );
-				}
-				
-				main.searchCriterieDialog.openDialog(name.toArray(),date.toArray());
-			}
 			if(e.getSource() ==  main.airlinesPane.btnAddNewAirline){
-				//open make new airline dialog
+				//create a new cell
+				//get cell info
+				//add a new airline
+				//reset the the airline/flight stuff
 			}
 			if(e.getSource() == main.airlinesPane.btnAddNewFlights) {
-				//open make new flight dialog
+				//create a new cell
+				//get cell info
+				//add a new flight
+				//reset flight
 			}
 			if(e.getSource() == main.airlinesPane.btnEditAirline) {
-				//open edit airline dialog
+				//
 			}
 			if(e.getSource() == main.airlinesPane.btnDeleteAirline){
-				//open delete airline dialog
+				//
 			}
 			if(e.getSource() == main.airlinesPane.btnShowAllFlights) {
 				main.flightsPerAirlineData(findAllFlight());
 			}
-			if(e.getSource() == main.purchaseSeatsDialog.okButton){
-				//get num seats and fare
-				//calulate subtotal
+			if(e.getSource() == main.btnLimitResults){
+				//refresh the flights pane
+			}
+			if(e.getSource() == main.btnPurchase){
+				//refresh the flights pane
+				int plusOccFC = 0, plusOccEco = 0;
+				Flight temp = purchaseFlight;
+				//flightDao.delete(purchaseFlight);
+				try {
+					plusOccFC = Integer.parseInt( main.purchaseNumEconomySeats.getText() );
+					plusOccEco = Integer.parseInt( main.purchaseFirstClassSeats.getText() );
+					temp.setAvailableFirstClass( temp.getAvailableFirstClass() - plusOccFC );
+		        	temp.setAvailableEconomy(temp.getAvailableEconomy() - plusOccEco );
+		        	temp.setOccupiedFirstClass(temp.getOccupiedFirstClass() + plusOccFC );
+		        	temp.setOccupiedEconomy( temp.getOccupiedEconomy() + plusOccEco );
+		        	
+		        	flightDao.save(temp);
+		        	//purchaseFlight = null;
+		        	main.lblWelcomeYourLast.setText("Purchase Successful!");
+		        	main.lblLatestPurchaseMade.setText("Latest sales increase: P" 
+		        	+ ( plusOccEco*temp.getEconomyFare() + plusOccFC*temp.getFirstClassFare() ));
+				} catch( NumberFormatException n){
+					n.printStackTrace();
+					main.lblWelcomeYourLast.setText("Error in purchasing: "+n.toString());
+				}
 			}
 		}
     }
@@ -244,12 +244,18 @@ public class DataSeeder
 	private class ItemChangeListener implements ItemListener{
 	    @Override
 	    public void itemStateChanged(ItemEvent event) {
-	    	if (event.getStateChange() == ItemEvent.SELECTED) {
-				//Object item = event.getItem();
-				Flight g = findFlight(main.purchaseSeatsDialog.comboBox.getSelectedItem().toString());
-				System.out.println(main.purchaseSeatsDialog.comboBox.getSelectedItem().toString());
-				main.purchaseSeatsDialog.textField.setText(""+g.getEconomyFare());
-				main.purchaseSeatsDialog.textField_1.setText(""+g.getFirstClassFare());
+	       if (event.getStateChange() == ItemEvent.SELECTED) {
+	          Object item = event.getItem();
+	          if( ( (String) event.getItem() ).equals("----- CHOOSE A FLIGHT -----") ||
+	        	( (String) event.getItem() ).equals("----- CHOOSE A DATE -----")  ){
+	        	  main.purchaseEconomyFare.setText( "x     P0.00"  );
+	        	  main.purchaseFirstClassFare.setText( "x     P0.00"  );
+	          } else {
+	        	  List<Flight> g = findFlightByName( (String) event.getItem() );
+	        	  purchaseFlight = g.get(0);
+	        	  main.purchaseEconomyFare.setText( "x     P" + purchaseFlight.getEconomyFare() );
+	        	  main.purchaseFirstClassFare.setText( "x     P" + purchaseFlight.getFirstClassFare() );
+	          }
 	       }
 	    }       
 	}
