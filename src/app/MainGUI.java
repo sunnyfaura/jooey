@@ -25,6 +25,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.Color;
 
 public class MainGUI extends JPanel {
 	
@@ -59,31 +60,33 @@ public class MainGUI extends JPanel {
 	JButton btnAddNewAirlineOrFlights, btnEditAirline, btnDeleteAirline;
 	
 	public Double economyFare, firstClassFare;
-	private JTextField textField;
 	private JLabel lblFlightName_1;
-	private JTextField textField_1;
 	private JLabel lblDate;
-	private JTextField textField_2;
 	private JLabel lblCreatesNewAirline;
 	private JLabel lblDoesNotExist;
 	private JLabel lblEconomyFare;
 	private JLabel lblFirstClassFare;
 	private JLabel lblAvailableSeatse;
 	private JLabel lblAvailableSeatsfc;
-	private JLabel lblOccupiedSeatse;
-	private JLabel lblOccupiedSeatsfc;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
+	public JTextField textDate;
+	public JTextField textEconomyFare;
+	public JTextField textFlightName;
+	public JTextField textFirstClassFare;
+	public JTextField textAvailSeatsEco;
+	public JTextField textAvailSeatsFC;
+	public JTextField textNewAirlineName;
+	public JTextField textOldAirlineName;
+	private JLabel lblIfAirlineExists;
+	private JLabel lblFlightToAirline;
+	private JLabel lblDoesNotExist_1;
+	private JLabel lblWelcomeToOur;
 	
 	public MainGUI() {
 		economyFare = firstClassFare = 0.00;
 		
 		airlinesPane = new AllAirlines();
-		airlinesPane.btnShowAllFlights.setLocation(10, 486);
+		airlinesPane.btnShowAllFlights.setSize(155, 46);
+		airlinesPane.btnShowAllFlights.setLocation(10, 488);
 		airlinesPane.setBounds(0, 0, 200, 750);
 //		airlinesPane.btnAddNewFlights.setLocation(22, 612);
 //		airlinesPane.btnEditAirline.setLocation(22, 660);
@@ -98,7 +101,8 @@ public class MainGUI extends JPanel {
 		ticketCountersPane.setLayout(null);
 		
 		lblWelcomeYourLast = new JLabel("A ticket counter has been created!");
-		lblWelcomeYourLast.setBounds(810, 11, 380, 31);
+		lblWelcomeYourLast.setForeground(new Color(102, 0, 204));
+		lblWelcomeYourLast.setBounds(801, 451, 380, 31);
 		add(lblWelcomeYourLast);
 		lblWelcomeYourLast.setFont(new Font("Tahoma", Font.BOLD, 13));
 		
@@ -201,55 +205,51 @@ public class MainGUI extends JPanel {
 		btnPurchase.setBounds(1052, 304, 120, 23);
 		add(btnPurchase);
 		
-		btnAddNewAirlineOrFlights = new JButton("Add New Airline/Flights");
-		btnAddNewAirlineOrFlights.setBounds(210, 484, 137, 23);
+		btnAddNewAirlineOrFlights = new JButton("Create Airline/Flights");
+		btnAddNewAirlineOrFlights.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnAddNewAirlineOrFlights.setBounds(210, 490, 159, 41);
 		add(btnAddNewAirlineOrFlights);
 		
 		btnEditAirline = new JButton("Edit Airline");
-		btnEditAirline.setBounds(210, 573, 137, 23);
+		btnEditAirline.setBounds(210, 612, 159, 23);
 		add(btnEditAirline);
 		
 		btnDeleteAirline = new JButton("Delete Airline");
-		btnDeleteAirline.setBounds(210, 607, 137, 23);
+		btnDeleteAirline.setBounds(210, 683, 159, 23);
 		add(btnDeleteAirline);
 		
-		textField = new JTextField();
-		textField.setBounds(552, 482, 187, 23);
-		add(textField);
-		textField.setColumns(10);
-		
 		JLabel lblAirlineName = new JLabel("Airline Name:");
-		lblAirlineName.setBounds(408, 488, 102, 14);
+		lblAirlineName.setBounds(408, 497, 102, 14);
 		add(lblAirlineName);
 		
 		JLabel lblFlights = new JLabel("Flights:");
-		lblFlights.setBounds(408, 524, 102, 14);
+		lblFlights.setBounds(368, 538, 102, 14);
 		add(lblFlights);
 		
 		lblFlightName_1 = new JLabel("Flight Name:");
 		lblFlightName_1.setBounds(408, 556, 102, 14);
 		add(lblFlightName_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(552, 553, 187, 20);
-		add(textField_1);
-		textField_1.setColumns(10);
+		textFlightName = new JTextField();
+		textFlightName.setBounds(552, 553, 187, 20);
+		add(textFlightName);
+		textFlightName.setColumns(10);
 		
 		lblDate = new JLabel("Date:");
 		lblDate.setBounds(408, 577, 46, 14);
 		add(lblDate);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(552, 574, 187, 20);
-		add(textField_2);
-		textField_2.setColumns(10);
+		textDate = new JTextField();
+		textDate.setBounds(552, 574, 187, 20);
+		add(textDate);
+		textDate.setColumns(10);
 		
-		lblCreatesNewAirline = new JLabel("Creates new Airline if Airline");
-		lblCreatesNewAirline.setBounds(210, 513, 159, 14);
+		lblCreatesNewAirline = new JLabel("Creates new Airline if");
+		lblCreatesNewAirline.setBounds(210, 538, 159, 14);
 		add(lblCreatesNewAirline);
 		
-		lblDoesNotExist = new JLabel("does not exist");
-		lblDoesNotExist.setBounds(210, 524, 137, 14);
+		lblDoesNotExist = new JLabel("Airline does not exist");
+		lblDoesNotExist.setBounds(210, 550, 137, 14);
 		add(lblDoesNotExist);
 		
 		lblEconomyFare = new JLabel("Economy Fare:");
@@ -268,47 +268,73 @@ public class MainGUI extends JPanel {
 		lblAvailableSeatsfc.setBounds(408, 660, 124, 14);
 		add(lblAvailableSeatsfc);
 		
-		lblOccupiedSeatse = new JLabel("Occupied Seats (E):");
-		lblOccupiedSeatse.setBounds(408, 682, 125, 14);
-		add(lblOccupiedSeatse);
+		textEconomyFare = new JTextField();
+		textEconomyFare.setBounds(552, 595, 187, 20);
+		add(textEconomyFare);
+		textEconomyFare.setColumns(10);
 		
-		lblOccupiedSeatsfc = new JLabel("Occupied Seats (FC):");
-		lblOccupiedSeatsfc.setBounds(408, 703, 125, 14);
-		add(lblOccupiedSeatsfc);
+		textFirstClassFare = new JTextField();
+		textFirstClassFare.setBounds(552, 616, 187, 20);
+		add(textFirstClassFare);
+		textFirstClassFare.setColumns(10);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(552, 595, 187, 20);
-		add(textField_3);
-		textField_3.setColumns(10);
+		textAvailSeatsEco = new JTextField();
+		textAvailSeatsEco.setBounds(552, 637, 187, 20);
+		add(textAvailSeatsEco);
+		textAvailSeatsEco.setColumns(10);
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(552, 616, 187, 20);
-		add(textField_4);
-		textField_4.setColumns(10);
+		textAvailSeatsFC = new JTextField();
+		textAvailSeatsFC.setBounds(552, 658, 187, 20);
+		add(textAvailSeatsFC);
+		textAvailSeatsFC.setColumns(10);
 		
-		textField_5 = new JTextField();
-		textField_5.setBounds(552, 637, 187, 20);
-		add(textField_5);
-		textField_5.setColumns(10);
+		JLabel lblChangesTheAirline = new JLabel("Changes the Airline Name ");
+		lblChangesTheAirline.setBounds(210, 640, 159, 14);
+		add(lblChangesTheAirline);
 		
-		textField_6 = new JTextField();
-		textField_6.setBounds(552, 658, 187, 20);
-		add(textField_6);
-		textField_6.setColumns(10);
+		JLabel lblIfProvided = new JLabel("if there's New Airline Name");
+		lblIfProvided.setBounds(210, 652, 159, 14);
+		add(lblIfProvided);
 		
-		textField_7 = new JTextField();
-		textField_7.setBounds(552, 679, 187, 20);
-		add(textField_7);
-		textField_7.setColumns(10);
+		JLabel lblNewAirlineName = new JLabel("New Airline Name:");
+		lblNewAirlineName.setBounds(408, 518, 124, 14);
+		add(lblNewAirlineName);
 		
-		textField_8 = new JTextField();
-		textField_8.setBounds(552, 700, 187, 20);
-		add(textField_8);
-		textField_8.setColumns(10);
+		textNewAirlineName = new JTextField();
+		textNewAirlineName.setBounds(552, 514, 187, 20);
+		add(textNewAirlineName);
+		textNewAirlineName.setColumns(10);
+		
+		textOldAirlineName = new JTextField();
+		textOldAirlineName.setBounds(552, 490, 187, 20);
+		add(textOldAirlineName);
+		textOldAirlineName.setColumns(10);
+		
+		lblIfAirlineExists = new JLabel("If Airline exists, adds ");
+		lblIfAirlineExists.setBounds(210, 563, 161, 14);
+		add(lblIfAirlineExists);
+		
+		lblFlightToAirline = new JLabel("Flight to Airline if Flight");
+		lblFlightToAirline.setBounds(210, 577, 188, 14);
+		add(lblFlightToAirline);
+		
+		lblDoesNotExist_1 = new JLabel("does not exist");
+		lblDoesNotExist_1.setBounds(210, 589, 159, 14);
+		add(lblDoesNotExist_1);
+		
+		lblWelcomeToOur = new JLabel("Welcome to our Airline Management System thing");
+		lblWelcomeToOur.setForeground(new Color(0, 204, 102));
+		lblWelcomeToOur.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblWelcomeToOur.setBounds(801, 11, 380, 31);
+		add(lblWelcomeToOur);
 	}
 	
 	public void allAirlinesData( List<Airline> m ) {
 		airlinesPane.updateData(m);
+	}
+	
+	public void refreshAirlines( List<Airline> m ) {
+		airlinesPane.updateDataAirlines(m);
 	}
 	
 	public void allFlightsData( List<Flight> m ) {

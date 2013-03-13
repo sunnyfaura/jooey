@@ -47,8 +47,8 @@ public class AllAirlines extends JPanel {
         scrollPane.setBounds(0, 0, 200, 471 );
         add(scrollPane);
         
-        btnShowAllFlights = new JButton("Show All Flights");
-        btnShowAllFlights.setBounds(22, 490, 155, 23);
+        btnShowAllFlights = new JButton("Refresh Tables");
+        btnShowAllFlights.setBounds(22, 500, 155, 23);
         add(btnShowAllFlights);
 	}
 	
@@ -56,6 +56,14 @@ public class AllAirlines extends JPanel {
 		for(Airline a : m){
 			dm.addElement(a);
 		}
+	}
+	
+	public void updateDataAirlines(List<Airline> m){
+		AirlineTableModel temp = new AirlineTableModel();
+		for(Airline a : m){
+			temp.addElement(a);
+		}
+		table.setModel(temp);
 	}
 
 	public String getAirlineName(){
