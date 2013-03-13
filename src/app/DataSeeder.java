@@ -5,23 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
 import javax.annotation.PostConstruct;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -31,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import app.entity.Airline;
 import app.entity.Flight;
-import app.entity.TCounter;
 import app.repositories.AirlineRepository;
 import app.repositories.FlightRepository;
 import app.repositories.TCounterRepository;
@@ -197,7 +183,7 @@ public class DataSeeder
 		
 		List<Flight> temp2 = air.getFlights();
 		for(Flight g : temp2){
-			if(g.getName().equals(fl.getName()) && g.getDate().equals(fl.getDate()))
+			if(g.getName().equals(fl.getName()) && g.getDate().equals(fl.getDate()));
 				return false;
 		}
 		
@@ -238,31 +224,36 @@ public class DataSeeder
 		public void actionPerformed(ActionEvent e){
 			if(e.getSource() ==  main.btnAddNewAirlineOrFlights){
 				String a = main.textOldAirlineName.getText();
+				boolean airlineDoesNotExist = true;
+				
 				//check if Airline exists
 				List<Airline> allAirlines = findAllAirlines();
 				for(Airline air : allAirlines){
 					if(air.getName().equals(a)){
 						//check if flight is NOT NULL
+						airlineDoesNotExist = false;
 						String g = main.textFlightName.getText();
 						if(!g.equals("")){
 							try{
 								if( addNewFlight(air.getId(), g, main.textDate.getText(),
-										Long.parseLong(main.textAvailSeatsFC.getText()), 
-										Long.parseLong(main.textAvailSeatsEco.getText()),
-										Double.parseDouble(main.textFirstClassFare.getText()),
-										Double.parseDouble(main.textEconomyFare.getText())) ) 
+									Long.parseLong(main.textAvailSeatsFC.getText()), 
+									Long.parseLong(main.textAvailSeatsEco.getText()),
+									Double.parseDouble(main.textFirstClassFare.getText()),
+									Double.parseDouble(main.textEconomyFare.getText())) ) 
 										main.lblWelcomeYourLast.setText("Successfully added new Flight to "+a+"!");
-								else main.lblWelcomeYourLast.setText("Flight already exists in "+air.getName());
+									else main.lblWelcomeYourLast.setText("Flight already exists in "+air.getName());
 							} catch(Exception m){
 								main.lblWelcomeYourLast.setText("Error adding new Flight! :(");
 								m.printStackTrace();
 							}
 						}
-					} else {
-						String g = main.textFlightName.getText();
-						if(!g.equals("")){
-							
-						}
+					} 
+				}
+				String g = main.textFlightName.getText();
+				if(airlineDoesNotExist){
+					if(!g.equals("")){
+						addAirline(a);
+						main.lblWelcomeYourLast.setText(g+" has been created!");
 					}
 				}
 				
@@ -321,7 +312,6 @@ public class DataSeeder
 	    @Override
 	    public void itemStateChanged(ItemEvent event) {
 	       if (event.getStateChange() == ItemEvent.SELECTED) {
-	          Object item = event.getItem();
 	          if( ( (String) event.getItem() ).equals("----- CHOOSE A FLIGHT -----") ||
 	        	( (String) event.getItem() ).equals("----- CHOOSE A DATE -----")  ){
 	        	  main.purchaseEconomyFare.setText( "x     P0.00"  );
