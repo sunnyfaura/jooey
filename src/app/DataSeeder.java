@@ -93,10 +93,11 @@ public class DataSeeder
 //					flightDao.save(f);
 //				}
 //			}
-			Airline temp = airlineDao.findByNameLike("Bad Airline");
-			System.out.println(temp.getName() + " " + temp.getId());
-			List<Flight> yay = findAllFlightsForAirline(temp);
-			System.out.println(yay.size());
+			
+//			Airline temp = airlineDao.findByNameLike("Bad Airline");
+//			System.out.println(temp.getName() + " " + temp.getId());
+//			List<Flight> yay = findAllFlightsForAirline(temp);
+//			System.out.println(yay.size());
 			main = new MainGUI();
 			
 			javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -104,15 +105,14 @@ public class DataSeeder
 	            	JFrame frame = new JFrame();
 	            	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	            	frame.setTitle("Airline Ticket Purchasing System");
-	            	frame.setPreferredSize(new Dimension(1200,700));
+	            	frame.setPreferredSize(new Dimension(1200,770));
 	            	frame.setContentPane(main);
 	            	frame.pack();
 	                frame.setVisible(true);
 	            	main.airlinesPane.getTable().getSelectionModel().addListSelectionListener(new AirlineRowListener());
-	    			main.airlinesPane.btnAddNewAirline.addActionListener(new ButtonListener());
-	    			main.airlinesPane.btnAddNewFlights.addActionListener(new ButtonListener());
-	    			main.airlinesPane.btnDeleteAirline.addActionListener(new ButtonListener());
-	    			main.airlinesPane.btnEditAirline.addActionListener(new ButtonListener());
+	    			main.btnAddNewAirlineOrFlights.addActionListener(new ButtonListener());
+	    			main.btnDeleteAirline.addActionListener(new ButtonListener());
+	    			main.btnEditAirline.addActionListener(new ButtonListener());
 	    			main.airlinesPane.btnShowAllFlights.addActionListener(new ButtonListener());
 	    			main.btnLimitResults.addActionListener(new ButtonListener());
 	    			main.btnPurchase.addActionListener(new ButtonListener());
@@ -193,23 +193,22 @@ public class DataSeeder
 	}
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e){
-			if(e.getSource() ==  main.airlinesPane.btnAddNewAirline){
-				//create a new cell
-				//get cell info
-				//add a new airline
-				//reset the the airline/flight stuff
+			if(e.getSource() ==  main.btnAddNewAirlineOrFlights){
+				
+//				add.open();
+//				
+//				Airline tempAirline = new Airline();
+//				
+//				tempAirline.setName( add.textField.getText() );
+//				List<Flight> flightList = new ArrayList<Flight>();
+//				tempAirline.setFlights(flightList);
+				//airlineDao.save(tempAirline);
 			}
-			if(e.getSource() == main.airlinesPane.btnAddNewFlights) {
-				//create a new cell
-				//get cell info
-				//add a new flight
-				//reset flight
+			if(e.getSource() == main.btnEditAirline) {
+				
 			}
-			if(e.getSource() == main.airlinesPane.btnEditAirline) {
-				//
-			}
-			if(e.getSource() == main.airlinesPane.btnDeleteAirline){
-				//
+			if(e.getSource() == main.btnDeleteAirline){
+				
 			}
 			if(e.getSource() == main.airlinesPane.btnShowAllFlights) {
 				main.flightsPerAirlineData(findAllFlight());

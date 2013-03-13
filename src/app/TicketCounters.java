@@ -25,7 +25,7 @@ public class TicketCounters extends JPanel {
 	 * Create the panel.
 	 */
 	public TicketCounters() {
-		setBounds(100, 100, 600, 700);
+		setBounds(100, 100, 600, 770);
 		setLayout(null);
 		
 		setOpaque(true);
@@ -35,7 +35,7 @@ public class TicketCounters extends JPanel {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);  
         scrollPane = new JScrollPane(table);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(0, 0, 585, 700);
+        scrollPane.setBounds(0, 0, 585, 471);
         add(scrollPane);
 	}
 	

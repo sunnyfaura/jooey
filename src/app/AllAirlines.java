@@ -28,7 +28,7 @@ public class AllAirlines extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable table;
-	public JButton btnAddNewAirline, btnAddNewFlights, btnEditAirline, btnDeleteAirline, btnShowAllFlights;
+	public JButton btnShowAllFlights;
 	private AirlineTableModel dm;
 	/**
 	 * Create the panel.
@@ -46,22 +46,6 @@ public class AllAirlines extends JPanel {
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBounds(0, 0, 200, 471 );
         add(scrollPane);
-        
-        btnAddNewAirline = new JButton("Add New Airline");
-        btnAddNewAirline.setBounds(22, 524, 155, 23);
-        add(btnAddNewAirline);
-        
-        btnAddNewFlights = new JButton("Add New Flights");
-        btnAddNewFlights.setBounds(22, 546, 155, 23);
-        add(btnAddNewFlights);
-        
-        btnEditAirline = new JButton("Edit Airline");
-        btnEditAirline.setBounds(22, 569, 155, 23);
-        add(btnEditAirline);
-        
-        btnDeleteAirline = new JButton("Delete Airline");
-        btnDeleteAirline.setBounds(22, 591, 155, 23);
-        add(btnDeleteAirline);
         
         btnShowAllFlights = new JButton("Show All Flights");
         btnShowAllFlights.setBounds(22, 490, 155, 23);

@@ -51,44 +51,70 @@ public class MainGUI extends JPanel {
 	public JTextField purchaseFirstClassSeats;
 	public JLabel purchaseEconomyFare;
 	public JLabel purchaseFirstClassFare;
+	
 	public JButton btnLimitResults;
 	public JButton btnPurchase;
 	public JCheckBox chckbxFlightName, chckbxEconomy, chckbxFirstclass, chckbxDateOfFlight;
 	
+	JButton btnAddNewAirlineOrFlights, btnEditAirline, btnDeleteAirline;
+	
 	public Double economyFare, firstClassFare;
+	private JTextField textField;
+	private JLabel lblFlightName_1;
+	private JTextField textField_1;
+	private JLabel lblDate;
+	private JTextField textField_2;
+	private JLabel lblCreatesNewAirline;
+	private JLabel lblDoesNotExist;
+	private JLabel lblEconomyFare;
+	private JLabel lblFirstClassFare;
+	private JLabel lblAvailableSeatse;
+	private JLabel lblAvailableSeatsfc;
+	private JLabel lblOccupiedSeatse;
+	private JLabel lblOccupiedSeatsfc;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
+	private JTextField textField_6;
+	private JTextField textField_7;
+	private JTextField textField_8;
 	
 	public MainGUI() {
 		economyFare = firstClassFare = 0.00;
 		
 		airlinesPane = new AllAirlines();
+		airlinesPane.setBounds(0, 0, 200, 770);
+//		airlinesPane.btnAddNewFlights.setLocation(22, 612);
+//		airlinesPane.btnEditAirline.setLocation(22, 660);
+//		airlinesPane.btnDeleteAirline.setLocation(22, 696);
 		ticketCountersPane = new TicketCounters();
+		ticketCountersPane.setBounds(200, 0, 600, 471);
 
-		setBounds(100, 100, 1200, 700);
+		setBounds(100, 100, 1200, 770);
 		setLayout(null);
-		airlinesPane.setBounds(0, 0, 200, 700);
 		add(airlinesPane);
-		ticketCountersPane.setBounds(200, 0, 600, 700);
 		add(ticketCountersPane);
+		ticketCountersPane.setLayout(null);
 		
 		lblWelcomeYourLast = new JLabel("A ticket counter has been created!");
+		lblWelcomeYourLast.setBounds(810, 11, 380, 31);
 		add(lblWelcomeYourLast);
 		lblWelcomeYourLast.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblWelcomeYourLast.setBounds(810, 11, 380, 31);
 		
 		lblLatestPurchaseMade = new JLabel("Latest sales increase: P0.00");
 		lblLatestPurchaseMade.setBounds(801, 340, 380, 23);
 		add(lblLatestPurchaseMade);
 		
 		lblTotalSales = new JLabel("Total Sales: P0.00");
-		lblTotalSales.setBounds(801, 504, 362, 23);
+		lblTotalSales.setBounds(801, 424, 362, 23);
 		add(lblTotalSales);
 		
 		lblNumberOfEconomy = new JLabel("Number of Economy Seats Sold: ");
-		lblNumberOfEconomy.setBounds(801, 462, 310, 14);
+		lblNumberOfEconomy.setBounds(801, 374, 310, 14);
 		add(lblNumberOfEconomy);
 		
 		lblNumberOfFirstclass = new JLabel("Number of First-Class Seats Sold:");
-		lblNumberOfFirstclass.setBounds(801, 484, 310, 14);
+		lblNumberOfFirstclass.setBounds(801, 399, 310, 14);
 		add(lblNumberOfFirstclass);
 		
 		JLabel lblOprionalSearchCriteria = new JLabel("Optional Search Criteria: ");
@@ -173,6 +199,111 @@ public class MainGUI extends JPanel {
 		btnPurchase = new JButton("Purchase!");
 		btnPurchase.setBounds(1052, 304, 120, 23);
 		add(btnPurchase);
+		
+		btnAddNewAirlineOrFlights = new JButton("Add New Airline/Flights");
+		btnAddNewAirlineOrFlights.setBounds(210, 484, 137, 23);
+		add(btnAddNewAirlineOrFlights);
+		
+		btnEditAirline = new JButton("Edit Airline");
+		btnEditAirline.setBounds(210, 573, 137, 23);
+		add(btnEditAirline);
+		
+		btnDeleteAirline = new JButton("Delete Airline");
+		btnDeleteAirline.setBounds(210, 607, 137, 23);
+		add(btnDeleteAirline);
+		
+		textField = new JTextField();
+		textField.setBounds(552, 482, 187, 23);
+		add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblAirlineName = new JLabel("Airline Name:");
+		lblAirlineName.setBounds(408, 488, 102, 14);
+		add(lblAirlineName);
+		
+		JLabel lblFlights = new JLabel("Flights:");
+		lblFlights.setBounds(408, 524, 102, 14);
+		add(lblFlights);
+		
+		lblFlightName_1 = new JLabel("Flight Name:");
+		lblFlightName_1.setBounds(408, 556, 102, 14);
+		add(lblFlightName_1);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(552, 553, 187, 20);
+		add(textField_1);
+		textField_1.setColumns(10);
+		
+		lblDate = new JLabel("Date:");
+		lblDate.setBounds(408, 577, 46, 14);
+		add(lblDate);
+		
+		textField_2 = new JTextField();
+		textField_2.setBounds(552, 574, 187, 20);
+		add(textField_2);
+		textField_2.setColumns(10);
+		
+		lblCreatesNewAirline = new JLabel("Creates new Airline if Airline");
+		lblCreatesNewAirline.setBounds(210, 513, 159, 14);
+		add(lblCreatesNewAirline);
+		
+		lblDoesNotExist = new JLabel("does not exist");
+		lblDoesNotExist.setBounds(210, 524, 137, 14);
+		add(lblDoesNotExist);
+		
+		lblEconomyFare = new JLabel("Economy Fare:");
+		lblEconomyFare.setBounds(408, 598, 124, 14);
+		add(lblEconomyFare);
+		
+		lblFirstClassFare = new JLabel("First Class Fare:");
+		lblFirstClassFare.setBounds(408, 616, 124, 14);
+		add(lblFirstClassFare);
+		
+		lblAvailableSeatse = new JLabel("Available Seats(E):");
+		lblAvailableSeatse.setBounds(407, 640, 125, 14);
+		add(lblAvailableSeatse);
+		
+		lblAvailableSeatsfc = new JLabel("Available Seats(FC):");
+		lblAvailableSeatsfc.setBounds(408, 660, 124, 14);
+		add(lblAvailableSeatsfc);
+		
+		lblOccupiedSeatse = new JLabel("Occupied Seats (E):");
+		lblOccupiedSeatse.setBounds(408, 682, 125, 14);
+		add(lblOccupiedSeatse);
+		
+		lblOccupiedSeatsfc = new JLabel("Occupied Seats (FC):");
+		lblOccupiedSeatsfc.setBounds(408, 703, 125, 14);
+		add(lblOccupiedSeatsfc);
+		
+		textField_3 = new JTextField();
+		textField_3.setBounds(552, 595, 187, 20);
+		add(textField_3);
+		textField_3.setColumns(10);
+		
+		textField_4 = new JTextField();
+		textField_4.setBounds(552, 616, 187, 20);
+		add(textField_4);
+		textField_4.setColumns(10);
+		
+		textField_5 = new JTextField();
+		textField_5.setBounds(552, 637, 187, 20);
+		add(textField_5);
+		textField_5.setColumns(10);
+		
+		textField_6 = new JTextField();
+		textField_6.setBounds(552, 658, 187, 20);
+		add(textField_6);
+		textField_6.setColumns(10);
+		
+		textField_7 = new JTextField();
+		textField_7.setBounds(552, 679, 187, 20);
+		add(textField_7);
+		textField_7.setColumns(10);
+		
+		textField_8 = new JTextField();
+		textField_8.setBounds(552, 700, 187, 20);
+		add(textField_8);
+		textField_8.setColumns(10);
 	}
 	
 	public void allAirlinesData( List<Airline> m ) {
