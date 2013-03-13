@@ -197,6 +197,47 @@ public class DataSeeder
 		airlineDao.save(air);
 	}
 	
+	public void editAirlineName(Long id,String name)
+	{
+		Airline temp = airlineDao.findOne(id);
+		temp.setName(name);
+		airlineDao.save(temp);
+	}
+	
+	public void editFlightEconomyPrice(Long id, Double price)
+	{
+		Flight temp = flightDao.findOne(id);
+		temp.setEconomyFare(price);
+		flightDao.save(temp);
+	}
+	
+	public void editFlightFirstClassPrice(Long id, Double price)
+	{
+		Flight temp = flightDao.findOne(id);
+		temp.setFirstClassFare(price);
+		flightDao.save(temp);
+	}
+	
+	public void addNewFlight(Long airlineId, String name, String date, Long availFirstClassSeats, 
+			Long availEconomySeats, Double firstClassFare, Double economyFare)
+	{	
+		Airline air = airlineDao.findOne(airlineId);
+		Flight fl = new Flight();
+		fl.setName(name);
+		fl.setDate(date);
+		fl.setAvailableFirstClass(availFirstClassSeats);
+		fl.setAvailableEconomy(availEconomySeats);
+		fl.setEconomyFare(economyFare);
+		fl.setFirstClassFare(firstClassFare);
+		fl.setOccupiedEconomy(Long.valueOf(0));
+		fl.setOccupiedFirstClass(Long.valueOf(0));
+		fl.setParentAirline(air);
+		List<Flight> temp2 = air.getFlights();
+		temp2.add(fl);
+		air.setFlights(temp2);
+		airlineDao.save(air);
+		flightDao.save(fl);
+	}
 	
 	public List <Flight> findAllFlightsForAirline(Airline a)
 	{
