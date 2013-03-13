@@ -166,6 +166,38 @@ public class DataSeeder
 		return airlineDao.findByNameLike(temp);
 	}
 	
+	public List<Flight> findFlightByDAte(String date)
+	{
+		String temp = "%";
+		temp+=date;
+		temp+="%";
+		return flightDao.findByDateLike(temp);	
+	}
+	
+	public void deleteAirline(Long id)
+	{
+		List<Flight> fl = flightDao.findAll();
+		for(int i = 0; i < fl.size(); i++)
+		{
+			Long temp = fl.get(i).getId();
+			if(id == temp)
+			{
+				flightDao.delete(fl.get(i));
+			}
+		}
+		airlineDao.delete(airlineDao.findOne(id));
+	}
+	
+	public void addAirline(String name)
+	{
+		List<Flight> temp = new ArrayList<Flight>();
+		Airline air = new Airline();
+		air.setFlights(temp);
+		air.setName(name);
+		airlineDao.save(air);
+	}
+	
+	
 	public List <Flight> findAllFlightsForAirline(Airline a)
 	{
 		List<Flight> temp = new ArrayList<Flight>();
