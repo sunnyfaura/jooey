@@ -20,10 +20,10 @@ import java.awt.event.ActionListener;
 
 public class MainGUI extends JPanel {
 	
-	public static AllAirlines airlinesPane;
-	public static TicketCounters ticketCountersPane;
-	public static PurchaseSeats purchaseSeatsDialog;
-	public static SearchCriteria searchCriterieDialog;
+	public AllAirlines airlinesPane;
+	public TicketCounters ticketCountersPane;
+	public PurchaseSeats purchaseSeatsDialog;
+	public SearchCriteria searchCriterieDialog;
 	
 	double salesIncrease = 0.0;
 	double totalSales = 0.0;

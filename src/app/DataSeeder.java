@@ -3,6 +3,10 @@ package app;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -14,6 +18,7 @@ import java.util.Scanner;
 
 import javax.annotation.PostConstruct;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
@@ -112,8 +117,7 @@ public class DataSeeder
 			main.airlinesPane.btnEditAirline.addActionListener(new ButtonListener());
 			main.airlinesPane.btnShowAllFlights.addActionListener(new ButtonListener());
 			main.btnSupplySearchCriteria.addActionListener(new ButtonListener());
-			
-			
+			main.btnPurchaseSeats.addActionListener(new ButtonListener());
 		}
 		catch(Exception e)
 		{
@@ -156,6 +160,13 @@ public class DataSeeder
 		return airlineDao.findByNameLike(temp);
 	}
 	
+	public Flight findFlight(String name){
+		String temp = "%";
+		temp+=name;
+		temp+="%";
+		return flightDao.findByName(temp);
+	}
+	
 	public List <Flight> findAllFlightsForAirline(Airline a)
 	{
 		List<Flight> temp = new ArrayList<Flight>();
@@ -187,22 +198,26 @@ public class DataSeeder
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e){
 			if(e.getSource() == main.btnPurchaseSeats){
+				List<String> name = new ArrayList<String>();
+				for( Flight newRow : findAllFlight() ) {
+				    name.add( newRow.getName() );
+				}
 				
-				main.purchaseSeatsDialog.openDialog();
+				main.purchaseSeatsDialog.openDialog(name.toArray());
+				main.purchaseSeatsDialog.getComboBox().addItemListener(new ItemChangeListener());
 			}
 			if(e.getSource() == main.btnSupplySearchCriteria) {
-				List<String> dcm1 = new ArrayList<String>();
+				List<String> name = new ArrayList<String>();
 				for( Flight newRow : findAllFlight() ) {
-				    dcm1.add( newRow.getName() );
+				    name.add( newRow.getName() );
 				}
-				main.searchCriterieDialog.setComboBox_1Model(dcm1);
 				
-				List<String> dcm2 = new ArrayList<String>();
+				List<String> date = new ArrayList<String>();
 				for( Flight newRow : findAllFlight() ) {
-				    dcm2.add( newRow.getName() );
+					date.add( newRow.getDate() );
 				}
-				main.searchCriterieDialog.setComboBox_2Model(dcm2);
-				main.searchCriterieDialog.openDialog();
+				
+				main.searchCriterieDialog.openDialog(name.toArray(),date.toArray());
 			}
 			if(e.getSource() ==  main.airlinesPane.btnAddNewAirline){
 				//open make new airline dialog
@@ -219,6 +234,23 @@ public class DataSeeder
 			if(e.getSource() == main.airlinesPane.btnShowAllFlights) {
 				main.flightsPerAirlineData(findAllFlight());
 			}
+			if(e.getSource() == main.purchaseSeatsDialog.okButton){
+				//get num seats and fare
+				//calulate subtotal
+			}
 		}
     }
+	
+	private class ItemChangeListener implements ItemListener{
+	    @Override
+	    public void itemStateChanged(ItemEvent event) {
+	    	if (event.getStateChange() == ItemEvent.SELECTED) {
+				//Object item = event.getItem();
+				Flight g = findFlight(main.purchaseSeatsDialog.comboBox.getSelectedItem().toString());
+				System.out.println(main.purchaseSeatsDialog.comboBox.getSelectedItem().toString());
+				main.purchaseSeatsDialog.textField.setText(""+g.getEconomyFare());
+				main.purchaseSeatsDialog.textField_1.setText(""+g.getFirstClassFare());
+	       }
+	    }       
+	}
 }
