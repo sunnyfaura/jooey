@@ -83,7 +83,8 @@ public class MainGUI extends JPanel {
 		economyFare = firstClassFare = 0.00;
 		
 		airlinesPane = new AllAirlines();
-		airlinesPane.setBounds(0, 0, 200, 770);
+		airlinesPane.btnShowAllFlights.setLocation(10, 486);
+		airlinesPane.setBounds(0, 0, 200, 750);
 //		airlinesPane.btnAddNewFlights.setLocation(22, 612);
 //		airlinesPane.btnEditAirline.setLocation(22, 660);
 //		airlinesPane.btnDeleteAirline.setLocation(22, 696);
