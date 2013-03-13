@@ -84,14 +84,14 @@ public class MainGUI extends JPanel {
 		add(lblTotalSales);
 		
 		lblNumberOfEconomy = new JLabel("Number of Economy Seats Sold: ");
-		lblNumberOfEconomy.setBounds(801, 462, 185, 14);
+		lblNumberOfEconomy.setBounds(801, 462, 310, 14);
 		add(lblNumberOfEconomy);
 		
 		lblNumberOfFirstclass = new JLabel("Number of First-Class Seats Sold:");
-		lblNumberOfFirstclass.setBounds(801, 484, 225, 14);
+		lblNumberOfFirstclass.setBounds(801, 484, 310, 14);
 		add(lblNumberOfFirstclass);
 		
-		JLabel lblOprionalSearchCriteria = new JLabel("Oprional Search Criteria: ");
+		JLabel lblOprionalSearchCriteria = new JLabel("Optional Search Criteria: ");
 		lblOprionalSearchCriteria.setBounds(801, 63, 234, 14);
 		add(lblOprionalSearchCriteria);
 		

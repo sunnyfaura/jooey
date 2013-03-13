@@ -51,6 +51,8 @@ public class DataSeeder
 	
 	private MainGUI main;
 	private Flight purchaseFlight;
+	Double totalSales = new Double(0.00);
+	int totalEcoSeats = 0, totalFCSeats = 0;
 	
 	@PostConstruct
 	public void run() 
@@ -231,11 +233,20 @@ public class DataSeeder
 		        	flightDao.save(temp);
 		        	//purchaseFlight = null;
 		        	main.lblWelcomeYourLast.setText("Purchase Successful!");
-		        	main.lblLatestPurchaseMade.setText("Latest sales increase: P" 
-		        	+ ( plusOccEco*temp.getEconomyFare() + plusOccFC*temp.getFirstClassFare() ));
+		        	totalSales +=  ( plusOccEco*temp.getEconomyFare() + plusOccFC*temp.getFirstClassFare());
+		        	main.lblLatestPurchaseMade.setText("Latest sales increase: P" + totalSales);
+		        	main.lblTotalSales.setText("Total Sales: P"+totalSales);
+		        	
+		        	totalEcoSeats += plusOccEco;
+		        	totalFCSeats += plusOccFC;
+		        	main.lblNumberOfEconomy.setText("Number of Economy Seats Sold: "+totalEcoSeats);
+		        	main.lblNumberOfFirstclass.setText("Number of First-Class Seats Sold: "+totalFCSeats);
 				} catch( NumberFormatException n){
 					n.printStackTrace();
 					main.lblWelcomeYourLast.setText("Error in purchasing: "+n.toString());
+				} catch(Exception m){
+					m.printStackTrace();
+					main.lblWelcomeYourLast.setText("Oh no! Something went wrong during purchase!");
 				}
 			}
 		}
@@ -250,6 +261,7 @@ public class DataSeeder
 	        	( (String) event.getItem() ).equals("----- CHOOSE A DATE -----")  ){
 	        	  main.purchaseEconomyFare.setText( "x     P0.00"  );
 	        	  main.purchaseFirstClassFare.setText( "x     P0.00"  );
+	        	  purchaseFlight = null;
 	          } else {
 	        	  List<Flight> g = findFlightByName( (String) event.getItem() );
 	        	  purchaseFlight = g.get(0);
