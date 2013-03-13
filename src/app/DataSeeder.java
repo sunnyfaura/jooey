@@ -227,33 +227,35 @@ public class DataSeeder
 				boolean airlineDoesNotExist = true;
 				
 				//check if Airline exists
-				List<Airline> allAirlines = findAllAirlines();
-				for(Airline air : allAirlines){
-					if(air.getName().equals(a)){
-						//check if flight is NOT NULL
-						airlineDoesNotExist = false;
-						String g = main.textFlightName.getText();
-						if(!g.equals("")){
-							try{
-								if( addNewFlight(air.getId(), g, main.textDate.getText(),
-									Long.parseLong(main.textAvailSeatsFC.getText()), 
-									Long.parseLong(main.textAvailSeatsEco.getText()),
-									Double.parseDouble(main.textFirstClassFare.getText()),
-									Double.parseDouble(main.textEconomyFare.getText())) ) 
-										main.lblWelcomeYourLast.setText("Successfully added new Flight to "+a+"!");
-									else main.lblWelcomeYourLast.setText("Flight already exists in "+air.getName());
-							} catch(Exception m){
-								main.lblWelcomeYourLast.setText("Error adding new Flight! :(");
-								m.printStackTrace();
+				if(!a.equals("")){
+					List<Airline> allAirlines = findAllAirlines();
+					for(Airline air : allAirlines){
+						if(air.getName().equals(a)){
+							//check if flight is NOT NULL
+							airlineDoesNotExist = false;
+							String g = main.textFlightName.getText();
+							if(!g.equals("")){
+								try{
+									if( addNewFlight(air.getId(), g, main.textDate.getText(),
+										Long.parseLong(main.textAvailSeatsFC.getText()), 
+										Long.parseLong(main.textAvailSeatsEco.getText()),
+										Double.parseDouble(main.textFirstClassFare.getText()),
+										Double.parseDouble(main.textEconomyFare.getText())) ) 
+											main.lblWelcomeYourLast.setText("Successfully added new Flight to "+a+"!");
+										else main.lblWelcomeYourLast.setText("Flight already exists in "+air.getName());
+								} catch(Exception m){
+									main.lblWelcomeYourLast.setText("Error adding new Flight to " + a + "! :(");
+									m.printStackTrace();
+								}
 							}
+						} 
+					}
+					String g = main.textFlightName.getText();
+					if(airlineDoesNotExist){
+						if(!g.equals("")){
+							addAirline(a);
+							main.lblWelcomeYourLast.setText(g+" has been created!");
 						}
-					} 
-				}
-				String g = main.textFlightName.getText();
-				if(airlineDoesNotExist){
-					if(!g.equals("")){
-						addAirline(a);
-						main.lblWelcomeYourLast.setText(g+" has been created!");
 					}
 				}
 				
@@ -261,10 +263,33 @@ public class DataSeeder
 //						Long availEconomySeats, Double firstClassFare, Double economyFare);
 			}
 			if(e.getSource() == main.btnEditAirline) {
+				String a = main.textOldAirlineName.getText();
 				
+				if(!a.equals("")){
+					List<Airline> allAirlines = findAllAirlines();
+					for(Airline air : allAirlines){
+						if(air.getName().equals(a)){
+							String g = main.textNewAirlineName.getText();
+							if(!g.equals("")){
+								editAirlineName(air.getId(),g);
+								main.lblWelcomeYourLast.setText(a+" has been renamed to "+g+"!");
+							}
+						}
+					}
+				}
 			}
 			if(e.getSource() == main.btnDeleteAirline){
+				String a = main.textOldAirlineName.getText();
 				
+				if(!a.equals("")){
+					List<Airline> allAirlines = findAllAirlines();
+					for(Airline air : allAirlines){
+						if(air.getName().equals(a)){
+							deleteAirline(air.getId());
+							main.lblWelcomeYourLast.setText(a+" has been deleted with all its children.");
+						}
+					}
+				}
 			}
 			if(e.getSource() == main.airlinesPane.btnShowAllFlights) {
 				main.flightsPerAirlineData(findAllFlight());
