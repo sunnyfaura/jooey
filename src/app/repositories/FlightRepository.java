@@ -13,8 +13,8 @@ import app.entity.TCounter;
 public interface FlightRepository extends JpaRepository<Flight, Long>
 {
 	List<Flight> findByParentAirlineLike(String pAirline);
-	List<Flight> findByAvailableEconomyGreaterThan(int seats);
-	List<Flight> findByAvailableFirstClassGreaterThan(int seats);
+	List<Flight> findByAvailableEconomyGreaterThan(Long numSeats);
+	List<Flight> findByAvailableFirstClassGreaterThan(Long seats);
 	List<Flight> findByNameLike(String name);
 	List<Flight> findByDateLike(String date);
 	Flight findById(Long id);

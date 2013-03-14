@@ -41,8 +41,6 @@ public class MainGUI extends JPanel {
 	
 	public JLabel lblBuyTickets;
 	public JTextField searchSeatsNeeded;
-	
-	public JComboBox searchFlightNameCB, searchFlighDateCB;
 	public JLabel lblFlightName;
 	
 	public JComboBox purchaseFlightNameCB;
@@ -80,6 +78,8 @@ public class MainGUI extends JPanel {
 	private JLabel lblFlightToAirline;
 	private JLabel lblDoesNotExist_1;
 	private JLabel lblWelcomeToOur;
+	public JTextField textSearchFlightName;
+	public JTextField textSearchFlightDate;
 	
 	public MainGUI() {
 		economyFare = firstClassFare = 0.00;
@@ -134,10 +134,6 @@ public class MainGUI extends JPanel {
 		chckbxFlightName.setBounds(806, 84, 97, 23);
 		add(chckbxFlightName);
 		
-		searchFlightNameCB = new JComboBox();
-		searchFlightNameCB.setBounds(909, 85, 263, 20);
-		add(searchFlightNameCB);
-		
 		JLabel lblSeatsNeeded = new JLabel("Seats Needed:");
 		lblSeatsNeeded.setBounds(810, 120, 93, 14);
 		add(lblSeatsNeeded);
@@ -158,10 +154,6 @@ public class MainGUI extends JPanel {
 		chckbxDateOfFlight = new JCheckBox("Date:");
 		chckbxDateOfFlight.setBounds(806, 144, 97, 23);
 		add(chckbxDateOfFlight);
-		
-		searchFlighDateCB = new JComboBox();
-		searchFlighDateCB.setBounds(909, 145, 263, 20);
-		add(searchFlighDateCB);
 		
 		lblFlightName = new JLabel("Flight Name");
 		lblFlightName.setBounds(811, 226, 92, 14);
@@ -327,6 +319,16 @@ public class MainGUI extends JPanel {
 		lblWelcomeToOur.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblWelcomeToOur.setBounds(801, 11, 380, 31);
 		add(lblWelcomeToOur);
+		
+		textSearchFlightName = new JTextField();
+		textSearchFlightName.setBounds(909, 85, 263, 20);
+		add(textSearchFlightName);
+		textSearchFlightName.setColumns(10);
+		
+		textSearchFlightDate = new JTextField();
+		textSearchFlightDate.setBounds(909, 145, 263, 20);
+		add(textSearchFlightDate);
+		textSearchFlightDate.setColumns(10);
 	}
 	
 	public void allAirlinesData( List<Airline> m ) {
@@ -344,7 +346,7 @@ public class MainGUI extends JPanel {
 		
 		for(Flight g : m)
 			model.addElement(g.getName());
-		searchFlightNameCB.setModel(model);
+		//searchFlightNameCB.setModel(model);
 		
 		model = new DefaultComboBoxModel();
 		model.addElement("----- CHOOSE A FLIGHT -----");
@@ -358,7 +360,7 @@ public class MainGUI extends JPanel {
 		
 		for(Flight g : m)
 			model.addElement(g.getDate());
-		searchFlighDateCB.setModel(model);
+		//searchFlighDateCB.setModel(model);
 	}
 	
 	public void flightsPerAirlineData( List<Flight> m ) {

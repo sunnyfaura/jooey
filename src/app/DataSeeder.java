@@ -88,16 +88,31 @@ public class DataSeeder
 		return flightDao.findAll();
 	}
 	
-	public List<Flight> findAvailableEconomy(int seats)
+	public List<Flight> findAvailableEconomy(Long numSeats)
 	{
-		return flightDao.findByAvailableEconomyGreaterThan(seats);
+		return flightDao.findByAvailableEconomyGreaterThan(numSeats-1);
 	}
 	
-	public List<Flight> findAvailableFirstClass(int seats)
+	public List<Flight> findAvailableFirstClass(Long seats)
 	{
-		return flightDao.findByAvailableFirstClassGreaterThan(seats);
+		return flightDao.findByAvailableFirstClassGreaterThan(seats-1);
 	}
 	
+	public List<Flight> findBothFirstAndEconomy(Long seats)
+	{
+		List<Flight> all = flightDao.findAll();
+		List<Flight> temp = new ArrayList<Flight>();
+		for(int i = 0; i < all.size(); i++)
+		{
+			Long ec = all.get(i).getAvailableEconomy();
+			Long fc = all.get(i).getAvailableFirstClass();
+			if((ec + fc) >= seats )
+			{
+				temp.add(all.get(i));
+			}
+		}
+		return temp;
+	}
 	public List<Flight> findFlightByName(String name)
 	{
 		String temp = "%";
@@ -296,35 +311,82 @@ public class DataSeeder
 				main.refreshAirlines(findAllAirlines());
 			}
 			if(e.getSource() == main.btnLimitResults){
-				//refresh the flights pane
-				main.flightsPerAirlineData(findFlightByName("ABC123"));
-				main.refreshAirlines(findAllAirlines());
+				boolean flightNameSelected = main.chckbxFlightName.isSelected();
+				boolean flightDateSelected = main.chckbxDateOfFlight.isSelected();
+				boolean economySelected = main.chckbxEconomy.isSelected();
+				boolean firstClassSelected = main.chckbxFirstclass.isSelected();
+				Long numSeats = Long.valueOf(0);
+				try{
+					numSeats =  Long.parseLong( main.searchSeatsNeeded.getText() );
+					
+				}
+				catch(Exception eb){
+
+					main.lblWelcomeYourLast.setText("Search failed!");
+				}
+				try{
+					if(flightNameSelected){
+						String name = main.textSearchFlightName.getText();
+						main.flightsPerAirlineData(findFlightByName(name));
+						main.refreshAirlines(findAllAirlines());
+					}
+					if(flightDateSelected){
+						String date = main.textSearchFlightDate.getText();	
+						main.flightsPerAirlineData(findFlightByDAte(date));
+						main.refreshAirlines(findAllAirlines());
+					}
+					if(economySelected && firstClassSelected){
+						main.flightsPerAirlineData(findBothFirstAndEconomy(numSeats));
+						main.refreshAirlines(findAllAirlines());
+					} else if(economySelected){
+						main.flightsPerAirlineData(findAvailableEconomy(numSeats));
+						main.refreshAirlines(findAllAirlines());
+					} else if(firstClassSelected){
+						main.flightsPerAirlineData(findAvailableFirstClass(numSeats));
+						main.refreshAirlines(findAllAirlines());
+					}
+				} catch(Exception m) {
+					m.printStackTrace();
+					main.lblWelcomeYourLast.setText("Search failed.");
+				}
 			}
 			if(e.getSource() == main.btnPurchase){
 				//refresh the flights pane
-				int plusOccFC = 0, plusOccEco = 0;
+				Long plusOccFC = Long.valueOf(0), plusOccEco = Long.valueOf(0);
 				Flight temp = purchaseFlight;
 				//flightDao.delete(purchaseFlight);
 				try {
-					plusOccFC = Integer.parseInt( main.purchaseNumEconomySeats.getText() );
-					plusOccEco = Integer.parseInt( main.purchaseFirstClassSeats.getText() );
-					temp.setAvailableFirstClass( temp.getAvailableFirstClass() - plusOccFC );
-		        	temp.setAvailableEconomy(temp.getAvailableEconomy() - plusOccEco );
-		        	temp.setOccupiedFirstClass(temp.getOccupiedFirstClass() + plusOccFC );
-		        	temp.setOccupiedEconomy( temp.getOccupiedEconomy() + plusOccEco );
-		        	
-		        	flightDao.save(temp);
+					plusOccFC = Long.parseLong(  main.purchaseFirstClassSeats.getText() );
+					plusOccEco = Long.parseLong(main.purchaseNumEconomySeats.getText() );
+					Long fc = temp.getAvailableFirstClass();
+					Long ec = temp.getAvailableEconomy();
+					boolean tero = (fc >= plusOccFC) && (ec >= plusOccEco);
+					if(tero)
+					{
+						temp.setAvailableFirstClass( temp.getAvailableFirstClass() - plusOccFC );
+			        	temp.setAvailableEconomy(temp.getAvailableEconomy() - plusOccEco );
+			        	temp.setOccupiedFirstClass(temp.getOccupiedFirstClass() + plusOccFC );
+			        	temp.setOccupiedEconomy( temp.getOccupiedEconomy() + plusOccEco );
+			        	totalSales +=  ( plusOccEco*temp.getEconomyFare() + plusOccFC*temp.getFirstClassFare());
+			        	main.lblLatestPurchaseMade.setText("Latest sales increase: P" + totalSales);
+			        	main.lblTotalSales.setText("Total Sales: P"+totalSales);
+
+			        	flightDao.save(temp);
+			        	totalEcoSeats += plusOccEco;
+			        	totalFCSeats += plusOccFC;
+			        	main.lblNumberOfEconomy.setText("Number of Economy Seats Sold: "+totalEcoSeats);
+			        	main.lblNumberOfFirstclass.setText("Number of First-Class Seats Sold: "+totalFCSeats);
+
+		        		main.lblWelcomeYourLast.setText("Purchase Successful!");
+					}
+					
 		        	//purchaseFlight = null;
-		        	main.lblWelcomeYourLast.setText("Purchase Successful!");
-		        	totalSales +=  ( plusOccEco*temp.getEconomyFare() + plusOccFC*temp.getFirstClassFare());
-		        	main.lblLatestPurchaseMade.setText("Latest sales increase: P" + totalSales);
-		        	main.lblTotalSales.setText("Total Sales: P"+totalSales);
 		        	
-		        	totalEcoSeats += plusOccEco;
-		        	totalFCSeats += plusOccFC;
-		        	main.lblNumberOfEconomy.setText("Number of Economy Seats Sold: "+totalEcoSeats);
-		        	main.lblNumberOfFirstclass.setText("Number of First-Class Seats Sold: "+totalFCSeats);
-				} catch( NumberFormatException n){
+					else if(!tero)
+		        	{
+		        		main.lblWelcomeYourLast.setText("Not enough Seats");
+		        	}
+		        	} catch( NumberFormatException n){
 					n.printStackTrace();
 					main.lblWelcomeYourLast.setText("Error in purchasing: "+n.toString());
 				} catch(Exception m){
