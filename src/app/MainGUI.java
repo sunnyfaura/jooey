@@ -81,6 +81,7 @@ public class MainGUI extends JPanel {
 	public JTextField textSearchFlightName;
 	public JTextField textSearchFlightDate;
 	public JButton btnAddFlights;
+	public JButton btnDeleteFlight;
 	
 	public MainGUI() {
 		economyFare = firstClassFare = 0.00;
@@ -208,7 +209,7 @@ public class MainGUI extends JPanel {
 		add(btnEditAirline);
 		
 		btnDeleteAirline = new JButton("Delete Airline");
-		btnDeleteAirline.setBounds(210, 683, 159, 23);
+		btnDeleteAirline.setBounds(210, 656, 159, 23);
 		add(btnDeleteAirline);
 		
 		JLabel lblAirlineName = new JLabel("Airline Name:");
@@ -281,14 +282,6 @@ public class MainGUI extends JPanel {
 		add(textAvailSeatsFC);
 		textAvailSeatsFC.setColumns(10);
 		
-		JLabel lblChangesTheAirline = new JLabel("Changes the Airline Name ");
-		lblChangesTheAirline.setBounds(210, 640, 159, 14);
-		add(lblChangesTheAirline);
-		
-		JLabel lblIfProvided = new JLabel("if there's New Airline Name");
-		lblIfProvided.setBounds(210, 652, 159, 14);
-		add(lblIfProvided);
-		
 		JLabel lblNewAirlineName = new JLabel("New Airline Name:");
 		lblNewAirlineName.setBounds(408, 518, 124, 14);
 		add(lblNewAirlineName);
@@ -334,6 +327,10 @@ public class MainGUI extends JPanel {
 		btnAddFlights = new JButton("Add Flights");
 		btnAddFlights.setBounds(210, 510, 159, 23);
 		add(btnAddFlights);
+		
+		btnDeleteFlight = new JButton("Delete Flight");
+		btnDeleteFlight.setBounds(210, 690, 159, 23);
+		add(btnDeleteFlight);
 	}
 	
 	public void allAirlinesData( List<Airline> m ) {

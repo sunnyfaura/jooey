@@ -67,6 +67,7 @@ public class DataSeeder
 	    			main.purchaseFlightNameCB.addItemListener(new ItemChangeListener());
 	    			main.btnAddNewAirline.addActionListener(new ButtonListener());
 	    			main.btnAddFlights.addActionListener(new ButtonListener());
+	    			main.btnDeleteFlight.addActionListener(new ButtonListener());
 	            }
         	});
 			
@@ -137,18 +138,25 @@ public class DataSeeder
 		return flightDao.findByDateLike(temp);	
 	}
 	
+	public void deleteFlight(Long id)
+	{
+		Flight temp = flightDao.findOne(id);
+		temp.setParentAirline(null);
+		flightDao.delete(temp);
+	}
+	
 	public void deleteAirline(Long id)
 	{
-		List<Flight> fl = flightDao.findAll();
-		for(int i = 0; i < fl.size(); i++)
+		Airline air = airlineDao.findOne(id);
+		System.out.println("air " + air.getId());
+		List<Flight> fl = findAllFlightsForAirline(air);
+		for(Flight f :fl)
 		{
-			Long temp = fl.get(i).getParentAirline().getId();
-			if(id == temp)
-			{
-				flightDao.delete(fl.get(i));
-			}
+			System.out.println("fl " + f.getId());
+			f.setParentAirline(null);
+			flightDao.delete(f);
 		}
-		airlineDao.delete(airlineDao.findOne(id));
+		airlineDao.delete(air);
 	}
 	
 	public void addAirline(String name)
@@ -305,6 +313,18 @@ public class DataSeeder
 								editAirlineName(air.getId(),g);
 								main.lblWelcomeYourLast.setText(a+" has been renamed to "+g+"!");
 							}
+						}
+					}
+				}
+			}
+			if(e.getSource() == main.btnDeleteFlight){
+				String a = main.textFlightName.getText();
+				if(!a.equals("")){
+					List<Flight> allFlights = findAllFlight();
+					for(Flight air : allFlights){
+						if(air.getName().equals(a)){
+							deleteFlight(air.getId());
+							main.lblWelcomeYourLast.setText("Flight "+a+" has been deleted.");
 						}
 					}
 				}
