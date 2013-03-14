@@ -55,7 +55,7 @@ public class MainGUI extends JPanel {
 	public JButton btnPurchase;
 	public JCheckBox chckbxFlightName, chckbxEconomy, chckbxFirstclass, chckbxDateOfFlight;
 	
-	JButton btnAddNewAirlineOrFlights, btnEditAirline, btnDeleteAirline;
+	JButton btnAddNewAirline, btnEditAirline, btnDeleteAirline;
 	
 	public Double economyFare, firstClassFare;
 	private JLabel lblFlightName_1;
@@ -80,6 +80,7 @@ public class MainGUI extends JPanel {
 	private JLabel lblWelcomeToOur;
 	public JTextField textSearchFlightName;
 	public JTextField textSearchFlightDate;
+	public JButton btnAddFlights;
 	
 	public MainGUI() {
 		economyFare = firstClassFare = 0.00;
@@ -197,10 +198,10 @@ public class MainGUI extends JPanel {
 		btnPurchase.setBounds(1052, 304, 120, 23);
 		add(btnPurchase);
 		
-		btnAddNewAirlineOrFlights = new JButton("Create Airline/Flights");
-		btnAddNewAirlineOrFlights.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnAddNewAirlineOrFlights.setBounds(210, 490, 159, 41);
-		add(btnAddNewAirlineOrFlights);
+		btnAddNewAirline = new JButton("Create Airline");
+		btnAddNewAirline.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnAddNewAirline.setBounds(210, 482, 159, 23);
+		add(btnAddNewAirline);
 		
 		btnEditAirline = new JButton("Edit Airline");
 		btnEditAirline.setBounds(210, 612, 159, 23);
@@ -329,6 +330,10 @@ public class MainGUI extends JPanel {
 		textSearchFlightDate.setBounds(909, 145, 263, 20);
 		add(textSearchFlightDate);
 		textSearchFlightDate.setColumns(10);
+		
+		btnAddFlights = new JButton("Add Flights");
+		btnAddFlights.setBounds(210, 510, 159, 23);
+		add(btnAddFlights);
 	}
 	
 	public void allAirlinesData( List<Airline> m ) {
@@ -342,24 +347,24 @@ public class MainGUI extends JPanel {
 	public void allFlightsData( List<Flight> m ) {
 		ticketCountersPane.updateData(m);
 		DefaultComboBoxModel model = new DefaultComboBoxModel(); 
-		model.addElement("----- CHOOSE A FLIGHT -----");
-		
-		for(Flight g : m)
-			model.addElement(g.getName());
+//		model.addElement("----- CHOOSE A FLIGHT -----");
+//		
+//		for(Flight g : m)
+//			model.addElement(g.getName());
 		//searchFlightNameCB.setModel(model);
 		
-		model = new DefaultComboBoxModel();
+		//model = new DefaultComboBoxModel();
 		model.addElement("----- CHOOSE A FLIGHT -----");
 		
 		for(Flight g : m)
 			model.addElement(g.getName());
 		purchaseFlightNameCB.setModel(model);
 		
-		model = new DefaultComboBoxModel();
-		model.addElement("----- CHOOSE A DATE -----");
-		
-		for(Flight g : m)
-			model.addElement(g.getDate());
+//		model = new DefaultComboBoxModel();
+//		model.addElement("----- CHOOSE A DATE -----");
+//		
+//		for(Flight g : m)
+//			model.addElement(g.getDate());
 		//searchFlighDateCB.setModel(model);
 	}
 	
