@@ -297,6 +297,8 @@ public class DataSeeder
 			}
 			if(e.getSource() == main.btnLimitResults){
 				//refresh the flights pane
+				main.flightsPerAirlineData(findFlightByName("ABC123"));
+				main.refreshAirlines(findAllAirlines());
 			}
 			if(e.getSource() == main.btnPurchase){
 				//refresh the flights pane
